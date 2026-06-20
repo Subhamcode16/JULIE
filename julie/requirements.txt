@@ -1,0 +1,39 @@
+# Core API
+fastapi>=0.115,<1
+uvicorn[standard]>=0.32,<1
+websockets>=13,<16
+python-dotenv>=1.0,<2
+pydantic>=2.10,<3
+
+# LLM
+groq==0.9.0
+httpx>=0.28,<1
+
+# Voice
+faster-whisper==1.0.3
+openwakeword==0.6.0
+kokoro-onnx==0.5.0
+soundfile>=0.12.1
+sounddevice==0.4.7
+PyAudio==0.2.14
+
+# Browser
+playwright==1.44.0
+
+# System
+pyautogui==0.9.54
+Pillow==10.3.0
+mss==9.0.1
+psutil==5.9.8
+pywin32==306
+
+# Storage
+aiosqlite==0.20.0
+
+# Scheduling
+APScheduler==3.10.4
+
+# Utils
+pydantic-settings>=2.7,<3
+loguru>=0.7,<1
+pytest>=8.3,<9

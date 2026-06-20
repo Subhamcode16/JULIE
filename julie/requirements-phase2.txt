@@ -1,0 +1,8 @@
+# Julie Voice Layer (Python 3.11+ compatible)
+faster-whisper==1.0.3
+openwakeword==0.6.0
+piper-tts==1.2.0
+sounddevice==0.4.7
+PyAudio==0.2.14
+websockets>=13,<16
+numpy<2.0.0

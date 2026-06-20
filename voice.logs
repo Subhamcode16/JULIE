@@ -1,0 +1,204 @@
+2026-06-20 23:17:21.265 | INFO     | julie.voice.listener:listen_and_transcribe:28 - Initializing Voice IPC Client...
+2026-06-20 23:17:21.272 | INFO     | julie.voice.listener:listen_and_transcribe:32 - Initializing Voice Models...
+2026-06-20 23:17:21.275 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+WARNING:root:Tried to import the tflite runtime, but it was not found. Trying to switching to onnxruntime instead, if appropriate models are available.
+2026-06-20 23:17:21.762 | INFO     | julie.voice.listener:listen_and_transcribe:38 - Loading Whisper Tiny...
+C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\huggingface_hub\constants.py:298: FutureWarning: The `HF_HUB_ENABLE_HF_TRANSFER` environment variable is deprecated as 'hf_transfer' is not used anymore. Please use `HF_XET_HIGH_PERFORMANCE` instead to enable high performance transfer with Xet. Visit https://huggingface.co/docs/huggingface_hub/package_reference/environment_variables#hfxethighperformance for more details.
+  warnings.warn(
+2026-06-20 23:17:23.795 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\huggingface_hub\file_download.py:137: UserWarning: `huggingface_hub` cache-system uses symlinks by default to efficiently store duplicated files but your machine does not support them in C:\Users\User\.cache\huggingface\hub\models--Systran--faster-whisper-tiny.en. Caching files will still work but in a degraded version that might require more space on your disk. This warning can be disabled by setting the `HF_HUB_DISABLE_SYMLINKS_WARNING` environment variable. For more details, see https://huggingface.co/docs/huggingface_hub/how-to-cache#limitations.
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+  warnings.warn(message)
+2026-06-20 23:17:26.819 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:17:28.878 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:17:31.887 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:17:33.939 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:17:36.953 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:17:38.963 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:17:41.536 | INFO     | julie.voice.listener:listen_and_transcribe:50 - Listening for wake word 'Hey Jarvis'...
+2026-06-20 23:17:41.974 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:17:44.014 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:17:46.679 | INFO     | julie.voice.listener:listen_and_transcribe:69 - Wake word detected! Recording...
+2026-06-20 23:17:47.023 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:17:48.193 | INFO     | julie.voice.listener:listen_and_transcribe:89 - Silence detected. Stopping recording.
+2026-06-20 23:17:48.194 | INFO     | julie.voice.listener:listen_and_transcribe:93 - Transcribing...
+2026-06-20 23:17:49.050 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:17:50.334 | WARNING  | julie.voice.listener:listen_and_transcribe:105 - No speech detected.
+2026-06-20 23:17:50.563 | INFO     | julie.voice.listener:listen_and_transcribe:109 - Resuming wake word listening...
+2026-06-20 23:17:52.060 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:17:54.094 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:17:56.487 | INFO     | julie.voice.listener:listen_and_transcribe:69 - Wake word detected! Recording...
+2026-06-20 23:17:57.099 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:17:58.003 | INFO     | julie.voice.listener:listen_and_transcribe:89 - Silence detected. Stopping recording.
+2026-06-20 23:17:58.003 | INFO     | julie.voice.listener:listen_and_transcribe:93 - Transcribing...
+2026-06-20 23:17:59.157 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:17:59.329 | WARNING  | julie.voice.listener:listen_and_transcribe:105 - No speech detected.
+2026-06-20 23:17:59.516 | INFO     | julie.voice.listener:listen_and_transcribe:109 - Resuming wake word listening...
+2026-06-20 23:18:02.170 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:04.192 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:07.195 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:09.236 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:12.253 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:14.307 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:17.322 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:19.354 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:22.364 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:24.415 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:25.517 | INFO     | julie.voice.listener:listen_and_transcribe:69 - Wake word detected! Recording...
+2026-06-20 23:18:27.029 | INFO     | julie.voice.listener:listen_and_transcribe:89 - Silence detected. Stopping recording.
+2026-06-20 23:18:27.031 | INFO     | julie.voice.listener:listen_and_transcribe:93 - Transcribing...
+2026-06-20 23:18:27.409 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:28.213 | WARNING  | julie.voice.listener:listen_and_transcribe:105 - No speech detected.
+2026-06-20 23:18:28.398 | INFO     | julie.voice.listener:listen_and_transcribe:109 - Resuming wake word listening...
+2026-06-20 23:18:29.452 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:32.461 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:34.483 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:37.489 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:39.508 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The remote computer refused the network connection. Retrying in 3 seconds...
+2026-06-20 23:18:42.510 | INFO     | julie.voice.ipc_client:connect_and_listen:23 - Connecting to core at ws://127.0.0.1:8765/ws...
+2026-06-20 23:18:44.565 | WARNING  | julie.voice.ipc_client:connect_and_listen:40 - Connection lost or failed: [WinError 1225] The 
+
+
+KeyboardInterrupt
+WARNING:  WatchFiles detected changes in '.venv311\Lib\site-packages\huggingface_hub\hf_api.py'. Reloading...
+ Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 132, in _main
+    self = reduction.pickle.load(from_parent)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\uvicorn\__init__.py", line 1, in <module>
+    from uvicorn.config import Config
+  File "C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\uvicorn\config.py", line 3, in <module>
+    import asyncio
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\asyncio\__init__.py", line 8, in <module>  
+    from .base_events import *
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\asyncio\base_events.py", line 18, in <module>
+    import concurrent.futures
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\concurrent\futures\__init__.py", line 8, in <module>
+    from concurrent.futures._base import (FIRST_COMPLETED,
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 7, in <module>
+    import logging
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\logging\__init__.py", line 26, in <module> 
+    import sys, os, time, io, re, traceback, warnings, weakref, collections.abc
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\traceback.py", line 7, in <module>
+    import textwrap
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\textwrap.py", line 17, in <module>
+    class TextWrapper:
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\textwrap.py", line 78, in TextWrapper      
+    wordsep_re = re.compile(r'''
+                 ^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\__init__.py", line 227, in compile      
+    return _compile(pattern, flags)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\__init__.py", line 294, in _compile     
+    p = _compiler.compile(pattern, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\_compiler.py", line 749, in compile     
+    code = _code(p, flags)
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\_compiler.py", line 582, in _code       
+    _compile(code, p.data, flags)
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\_compiler.py", line 128, in _compile    
+    _compile(code, p, _combine_flags(flags, add_flags, del_flags))
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\_compiler.py", line 176, in _compile    
+    _compile(code, av, flags)
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\_compiler.py", line 106, in _compile    
+    if _simple(av[2]):
+       ^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\_compiler.py", line 402, in _simple     
+    op, av = p[0]
+             ~^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\re\_parser.py", line 168, in __getitem__   
+    def __getitem__(self, index):
+
+KeyboardInterrupt
+WARNING:  WatchFiles detected changes in '.venv311\Lib\site-packages\huggingface_hub\_commit_api.py'. Reloading...
+ Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 132, in _main
+    self = reduction.pickle.load(from_parent)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\uvicorn\__init__.py", line 1, in <module>
+    from uvicorn.config import Config
+  File "C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\uvicorn\config.py", line 3, in <module>
+    import asyncio
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\asyncio\__init__.py", line 8, in <module>  
+    from .base_events import *
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\asyncio\base_events.py", line 40, in <module>
+    from . import coroutines
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\asyncio\coroutines.py", line 4, in <module>
+    import inspect
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\inspect.py", line 1706, in <module>        
+    _FrameInfo = namedtuple('_FrameInfo', ('frame',) + Traceback._fields)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\collections\__init__.py", line 436, in namedtuple
+    __new__ = eval(code, namespace)
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 0, in <module>
+KeyboardInterrupt
+WARNING:  WatchFiles detected changes in '.venv311\Lib\site-packages\huggingface_hub\_upload_large_folder.py'. Reloading...     
+ Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\multiprocessing\spawn.py", line 132, in _main
+    self = reduction.pickle.load(from_parent)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\uvicorn\__init__.py", line 1, in <module>
+    from uvicorn.config import Config
+  File "C:\Users\User\OneDrive\Desktop\projects\Julie_AI_personal_assistant\.venv311\Lib\site-packages\uvicorn\config.py", line 3, in <module>
+    import asyncio
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\asyncio\__init__.py", line 8, in <module>  
+    from .base_events import *
+  File "C:\Users\User\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\Lib\asyncio\base_events.py", line 21, in <module>
+    import heapq
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1026, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1148, in path_stats
+  File "<frozen importlib._bootstrap_external>", line 147, in _path_stat
+KeyboardInterrupt
+INFO:     Started server process [44204]
+INFO:     Waiting for application startup.
+2026-06-20 23:17:29.111 | INFO     | julie.core.main:startup_event:62 - Julie core starting...
+2026-06-20 23:17:29.123 | INFO     | julie.core.main:startup_event:64 - Database initialized at data\julie.db
+2026-06-20 23:17:29.123 | INFO     | julie.core.main:startup_event:65 - WebSocket: ws://127.0.0.1:8765
+2026-06-20 23:17:29.125 | INFO     | julie.core.main:startup_event:66 - HTTP: http://127.0.0.1:8766
+2026-06-20 23:17:29.125 | INFO     | julie.core.main:startup_event:67 - Ready.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:50443 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52273 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54456 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54458 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54464 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54466 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54468 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54308 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54310 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54314 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54320 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54322 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54327 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54332 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54334 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54339 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54341 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54346 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54349 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50104 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50108 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50110 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50115 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50119 - "GET /v1/relay/pull HTTP/1.1" 404 Not Found
+INFO:   

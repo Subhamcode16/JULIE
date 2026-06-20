@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100px;
+  height: 100px;
+  background: transparent !important;
+  overflow: hidden;
+  user-select: none;
+}
+
+.orb-root {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+.orb-container {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  position: relative;
+  -webkit-app-region: drag;
+}
+
+/* Fallback/loading state style */
+.loading-orb {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 40%, rgba(5,5,20,0.95) 0%, rgba(2,2,10,0.98) 100%);
+  border: 1px solid rgba(0,200,255,0.15);
+  box-shadow: 0 0 10px rgba(0,150,200,0.1);
+}

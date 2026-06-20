@@ -1,0 +1,17 @@
+# Julie core (Python 3.13 compatible)
+fastapi>=0.115,<1
+uvicorn[standard]>=0.32,<1
+websockets>=13,<16
+python-dotenv>=1.0,<2
+pydantic>=2.10,<3
+pydantic-settings>=2.7,<3
+
+# LLM transport
+httpx>=0.28,<1
+
+# Storage
+aiosqlite>=0.20,<1
+
+# Logging and tests
+loguru>=0.7,<1
+pytest>=8.3,<9

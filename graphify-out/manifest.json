@@ -1,0 +1,532 @@
+{
+  "caveman/.agents/skills/caveman-compress/scripts/__init__.py": {
+    "mtime": 1781511171.6458423,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": "d6acae7e188357d1bc1258ce02a29811"
+  },
+  "caveman/.agents/skills/caveman-compress/scripts/__main__.py": {
+    "mtime": 1781511171.6474366,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": "5bd0e02db4907bf4e435e5d770256fef"
+  },
+  "caveman/.agents/skills/caveman-compress/scripts/benchmark.py": {
+    "mtime": 1781511171.6514544,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": "07500037c8606fc9ab1832f55a5ff346"
+  },
+  "caveman/.agents/skills/caveman-compress/scripts/cli.py": {
+    "mtime": 1781511171.652459,
+    "ast_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894",
+    "semantic_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894"
+  },
+  "caveman/.agents/skills/caveman-compress/scripts/compress.py": {
+    "mtime": 1781511171.6554575,
+    "ast_hash": "1ad5157c3585b77dd4e547dd4a98bdf9",
+    "semantic_hash": "1ad5157c3585b77dd4e547dd4a98bdf9"
+  },
+  "caveman/.agents/skills/caveman-compress/scripts/detect.py": {
+    "mtime": 1781511171.6569684,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": "951a4593947c23cb9bfe8d99dc245b16"
+  },
+  "caveman/.agents/skills/caveman-compress/scripts/validate.py": {
+    "mtime": 1781511171.6579874,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": "5d3394df7677d1ee08f0b69bb767b38c"
+  },
+  "caveman/.claude-plugin/marketplace.json": {
+    "mtime": 1781510993.915119,
+    "ast_hash": "e5227dc7f420052ea05c0b3541b61e4d",
+    "semantic_hash": "e5227dc7f420052ea05c0b3541b61e4d"
+  },
+  "caveman/.claude-plugin/plugin.json": {
+    "mtime": 1781510993.9191215,
+    "ast_hash": "1089ef1d169eb58e865abc2f22965237",
+    "semantic_hash": "1089ef1d169eb58e865abc2f22965237"
+  },
+  "caveman/.codex/hooks.json": {
+    "mtime": 1781510993.9265568,
+    "ast_hash": "cd58ac55ed502d58bebddf217a1ba790",
+    "semantic_hash": "cd58ac55ed502d58bebddf217a1ba790"
+  },
+  "caveman/.windsurf/skills/caveman-compress/scripts/__init__.py": {
+    "mtime": 1781511195.7527828,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": "d6acae7e188357d1bc1258ce02a29811"
+  },
+  "caveman/.windsurf/skills/caveman-compress/scripts/__main__.py": {
+    "mtime": 1781511195.7547817,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": "5bd0e02db4907bf4e435e5d770256fef"
+  },
+  "caveman/.windsurf/skills/caveman-compress/scripts/benchmark.py": {
+    "mtime": 1781511195.7557843,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": "07500037c8606fc9ab1832f55a5ff346"
+  },
+  "caveman/.windsurf/skills/caveman-compress/scripts/cli.py": {
+    "mtime": 1781511195.7572937,
+    "ast_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894",
+    "semantic_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894"
+  },
+  "caveman/.windsurf/skills/caveman-compress/scripts/compress.py": {
+    "mtime": 1781511195.7593076,
+    "ast_hash": "1ad5157c3585b77dd4e547dd4a98bdf9",
+    "semantic_hash": "1ad5157c3585b77dd4e547dd4a98bdf9"
+  },
+  "caveman/.windsurf/skills/caveman-compress/scripts/detect.py": {
+    "mtime": 1781511195.7633097,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": "951a4593947c23cb9bfe8d99dc245b16"
+  },
+  "caveman/.windsurf/skills/caveman-compress/scripts/validate.py": {
+    "mtime": 1781511195.7653086,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": "5d3394df7677d1ee08f0b69bb767b38c"
+  },
+  "caveman/benchmarks/prompts.json": {
+    "mtime": 1781510993.9720984,
+    "ast_hash": "118bb3be1bcb3160dc02f98204f6729a",
+    "semantic_hash": "118bb3be1bcb3160dc02f98204f6729a"
+  },
+  "caveman/benchmarks/run.py": {
+    "mtime": 1781510993.9915879,
+    "ast_hash": "fa73a2f83ebdd1bd4c252a11ab5ef9a8",
+    "semantic_hash": "fa73a2f83ebdd1bd4c252a11ab5ef9a8"
+  },
+  "caveman/bin/install.js": {
+    "mtime": 1781510993.9945974,
+    "ast_hash": "a7e11e229dbde78bfcf60b0a3244059b",
+    "semantic_hash": "a7e11e229dbde78bfcf60b0a3244059b"
+  },
+  "caveman/bin/lib/openclaw.js": {
+    "mtime": 1781510993.996598,
+    "ast_hash": "acb6acd4351f7c7f01cae18115b77864",
+    "semantic_hash": "acb6acd4351f7c7f01cae18115b77864"
+  },
+  "caveman/bin/lib/opencode-agent.js": {
+    "mtime": 1781510993.998599,
+    "ast_hash": "c1af7aa2af9df93e8f0ba9d39a68743b",
+    "semantic_hash": "c1af7aa2af9df93e8f0ba9d39a68743b"
+  },
+  "caveman/bin/lib/settings.js": {
+    "mtime": 1781510994.0056024,
+    "ast_hash": "677122c5dc9af3c80454a3a4f488b826",
+    "semantic_hash": "677122c5dc9af3c80454a3a4f488b826"
+  },
+  "caveman/evals/llm_run.py": {
+    "mtime": 1781510994.053592,
+    "ast_hash": "5e35c4902a8a89e7f982c91a38e7c06c",
+    "semantic_hash": "5e35c4902a8a89e7f982c91a38e7c06c"
+  },
+  "caveman/evals/measure.py": {
+    "mtime": 1781510994.0545907,
+    "ast_hash": "a3b70208993525e7bea234ca893effba",
+    "semantic_hash": "a3b70208993525e7bea234ca893effba"
+  },
+  "caveman/evals/plot.py": {
+    "mtime": 1781510994.0555902,
+    "ast_hash": "02ba92a2a308aab29a671581307c1723",
+    "semantic_hash": "02ba92a2a308aab29a671581307c1723"
+  },
+  "caveman/gemini-extension.json": {
+    "mtime": 1781510994.0621107,
+    "ast_hash": "b66a56b7179c57fb8a0a9279c8ac65e5",
+    "semantic_hash": "b66a56b7179c57fb8a0a9279c8ac65e5"
+  },
+  "caveman/install.ps1": {
+    "mtime": 1781510994.0631113,
+    "ast_hash": "55b384894040a7c99519e6c9fcfc91cc",
+    "semantic_hash": "55b384894040a7c99519e6c9fcfc91cc"
+  },
+  "caveman/install.sh": {
+    "mtime": 1781510994.0641098,
+    "ast_hash": "874c6ce0f7a81baa7ed36de0a6a29358",
+    "semantic_hash": "874c6ce0f7a81baa7ed36de0a6a29358"
+  },
+  "caveman/package.json": {
+    "mtime": 1781510994.0651107,
+    "ast_hash": "526497ae2988ffc8e9896387c2ed1d79",
+    "semantic_hash": "526497ae2988ffc8e9896387c2ed1d79"
+  },
+  "caveman/plugins/caveman/.codex-plugin/plugin.json": {
+    "mtime": 1781510994.074111,
+    "ast_hash": "e8265258a183dbcbe81b315cda2d0c82",
+    "semantic_hash": "e8265258a183dbcbe81b315cda2d0c82"
+  },
+  "caveman/plugins/caveman/skills/caveman-compress/scripts/__init__.py": {
+    "mtime": 1781510994.092122,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": "d6acae7e188357d1bc1258ce02a29811"
+  },
+  "caveman/plugins/caveman/skills/caveman-compress/scripts/__main__.py": {
+    "mtime": 1781510994.0941198,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": "5bd0e02db4907bf4e435e5d770256fef"
+  },
+  "caveman/plugins/caveman/skills/caveman-compress/scripts/benchmark.py": {
+    "mtime": 1781510994.0951207,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": "07500037c8606fc9ab1832f55a5ff346"
+  },
+  "caveman/plugins/caveman/skills/caveman-compress/scripts/cli.py": {
+    "mtime": 1781510994.0971198,
+    "ast_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894",
+    "semantic_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894"
+  },
+  "caveman/plugins/caveman/skills/caveman-compress/scripts/compress.py": {
+    "mtime": 1781510994.0998075,
+    "ast_hash": "1ad5157c3585b77dd4e547dd4a98bdf9",
+    "semantic_hash": "1ad5157c3585b77dd4e547dd4a98bdf9"
+  },
+  "caveman/plugins/caveman/skills/caveman-compress/scripts/detect.py": {
+    "mtime": 1781510994.1048107,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": "951a4593947c23cb9bfe8d99dc245b16"
+  },
+  "caveman/plugins/caveman/skills/caveman-compress/scripts/validate.py": {
+    "mtime": 1781510994.1068099,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": "5d3394df7677d1ee08f0b69bb767b38c"
+  },
+  "caveman/skills-lock.json": {
+    "mtime": 1781511198.4863987,
+    "ast_hash": "557df82d7a5f0a473b7da551762a06b9",
+    "semantic_hash": "557df82d7a5f0a473b7da551762a06b9"
+  },
+  "caveman/skills/caveman-compress/scripts/__init__.py": {
+    "mtime": 1781510994.1443927,
+    "ast_hash": "d6acae7e188357d1bc1258ce02a29811",
+    "semantic_hash": "d6acae7e188357d1bc1258ce02a29811"
+  },
+  "caveman/skills/caveman-compress/scripts/__main__.py": {
+    "mtime": 1781510994.1463945,
+    "ast_hash": "5bd0e02db4907bf4e435e5d770256fef",
+    "semantic_hash": "5bd0e02db4907bf4e435e5d770256fef"
+  },
+  "caveman/skills/caveman-compress/scripts/benchmark.py": {
+    "mtime": 1781510994.1473963,
+    "ast_hash": "07500037c8606fc9ab1832f55a5ff346",
+    "semantic_hash": "07500037c8606fc9ab1832f55a5ff346"
+  },
+  "caveman/skills/caveman-compress/scripts/cli.py": {
+    "mtime": 1781510994.1493938,
+    "ast_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894",
+    "semantic_hash": "9ed03f4b75aae3f25ea0d9c15dbf6894"
+  },
+  "caveman/skills/caveman-compress/scripts/compress.py": {
+    "mtime": 1781510994.1533947,
+    "ast_hash": "1ad5157c3585b77dd4e547dd4a98bdf9",
+    "semantic_hash": "1ad5157c3585b77dd4e547dd4a98bdf9"
+  },
+  "caveman/skills/caveman-compress/scripts/detect.py": {
+    "mtime": 1781510994.155392,
+    "ast_hash": "951a4593947c23cb9bfe8d99dc245b16",
+    "semantic_hash": "951a4593947c23cb9bfe8d99dc245b16"
+  },
+  "caveman/skills/caveman-compress/scripts/validate.py": {
+    "mtime": 1781510994.1569018,
+    "ast_hash": "5d3394df7677d1ee08f0b69bb767b38c",
+    "semantic_hash": "5d3394df7677d1ee08f0b69bb767b38c"
+  },
+  "caveman/src/hooks/caveman-activate.js": {
+    "mtime": 1781510994.1882496,
+    "ast_hash": "ff66e353507b8db95f4cc6c11e7addd8",
+    "semantic_hash": "ff66e353507b8db95f4cc6c11e7addd8"
+  },
+  "caveman/src/hooks/caveman-config.js": {
+    "mtime": 1781510994.1908555,
+    "ast_hash": "5ba63a594517b2f74e1fb487ba86dd0f",
+    "semantic_hash": "5ba63a594517b2f74e1fb487ba86dd0f"
+  },
+  "caveman/src/hooks/caveman-mode-tracker.js": {
+    "mtime": 1781510994.191867,
+    "ast_hash": "681b361a80301138e24c2e9a2cc71257",
+    "semantic_hash": "681b361a80301138e24c2e9a2cc71257"
+  },
+  "caveman/src/hooks/caveman-stats.js": {
+    "mtime": 1781510994.1938682,
+    "ast_hash": "b2fbe39838ac4241df442cb8f1b27771",
+    "semantic_hash": "b2fbe39838ac4241df442cb8f1b27771"
+  },
+  "caveman/src/hooks/caveman-statusline.ps1": {
+    "mtime": 1781510994.1958725,
+    "ast_hash": "8c626b77ab25d752f97949a1cb13a3b2",
+    "semantic_hash": "8c626b77ab25d752f97949a1cb13a3b2"
+  },
+  "caveman/src/hooks/caveman-statusline.sh": {
+    "mtime": 1781510994.1968675,
+    "ast_hash": "275c166e4462f502304b05825bd7e1e5",
+    "semantic_hash": "275c166e4462f502304b05825bd7e1e5"
+  },
+  "caveman/src/hooks/install.ps1": {
+    "mtime": 1781510994.203868,
+    "ast_hash": "1322f3d04cdd7db255612b05e9a92d98",
+    "semantic_hash": "1322f3d04cdd7db255612b05e9a92d98"
+  },
+  "caveman/src/hooks/install.sh": {
+    "mtime": 1781510994.2048697,
+    "ast_hash": "f00efc9530714c670b9c61ffdbd409cb",
+    "semantic_hash": "f00efc9530714c670b9c61ffdbd409cb"
+  },
+  "caveman/src/hooks/package.json": {
+    "mtime": 1781510994.2063823,
+    "ast_hash": "56368b3e2b84dac2c9ed38b5c4329ec2",
+    "semantic_hash": "56368b3e2b84dac2c9ed38b5c4329ec2"
+  },
+  "caveman/src/hooks/uninstall.ps1": {
+    "mtime": 1781510994.2083955,
+    "ast_hash": "16bb04dc1a84d268a3814746de697e42",
+    "semantic_hash": "16bb04dc1a84d268a3814746de697e42"
+  },
+  "caveman/src/hooks/uninstall.sh": {
+    "mtime": 1781510994.2093964,
+    "ast_hash": "f267cfe1c1c511911d7fcc94eaf47789",
+    "semantic_hash": "f267cfe1c1c511911d7fcc94eaf47789"
+  },
+  "caveman/src/mcp-servers/caveman-shrink/compress.js": {
+    "mtime": 1781510994.2143972,
+    "ast_hash": "ca3264e3ccb7361148408e0149596da7",
+    "semantic_hash": "ca3264e3ccb7361148408e0149596da7"
+  },
+  "caveman/src/mcp-servers/caveman-shrink/index.js": {
+    "mtime": 1781510994.2213976,
+    "ast_hash": "a60301f3ab10f38907c5dbad9edaea62",
+    "semantic_hash": "a60301f3ab10f38907c5dbad9edaea62"
+  },
+  "caveman/src/mcp-servers/caveman-shrink/package.json": {
+    "mtime": 1781510994.2233956,
+    "ast_hash": "769f139333c89115ec432ff4897de3f8",
+    "semantic_hash": "769f139333c89115ec432ff4897de3f8"
+  },
+  "caveman/src/mcp-servers/caveman-shrink/spawn-options.js": {
+    "mtime": 1781510994.224396,
+    "ast_hash": "982ddc71df9e69a437ac8712c8c6b47b",
+    "semantic_hash": "982ddc71df9e69a437ac8712c8c6b47b"
+  },
+  "caveman/src/plugins/opencode/package.json": {
+    "mtime": 1781510994.24095,
+    "ast_hash": "1322e46008e0a4f3ebdcae4a720fc264",
+    "semantic_hash": "1322e46008e0a4f3ebdcae4a720fc264"
+  },
+  "caveman/src/plugins/opencode/plugin.js": {
+    "mtime": 1781510994.241951,
+    "ast_hash": "c6465ed4d2cbfa3bf12435e0a2bd03aa",
+    "semantic_hash": "c6465ed4d2cbfa3bf12435e0a2bd03aa"
+  },
+  "caveman/src/tools/caveman-init.js": {
+    "mtime": 1781510994.246964,
+    "ast_hash": "b1682925d6f5ff8fa77437f327d90b09",
+    "semantic_hash": "b1682925d6f5ff8fa77437f327d90b09"
+  },
+  "caveman/tests/installer/e2e.dryrun.test.mjs": {
+    "mtime": 1781510994.269728,
+    "ast_hash": "d1f59f905f23d88c3d3a0c9d69d83485",
+    "semantic_hash": "d1f59f905f23d88c3d3a0c9d69d83485"
+  },
+  "caveman/tests/installer/e2e.freshinstall.test.mjs": {
+    "mtime": 1781510994.2727299,
+    "ast_hash": "e2941ee851b5653e04d14b0c6c497c55",
+    "semantic_hash": "e2941ee851b5653e04d14b0c6c497c55"
+  },
+  "caveman/tests/installer/opencode-agent.test.mjs": {
+    "mtime": 1781510994.2737277,
+    "ast_hash": "91c93ff7e178570fa6c22c959152a9fd",
+    "semantic_hash": "91c93ff7e178570fa6c22c959152a9fd"
+  },
+  "caveman/tests/installer/opencode.test.mjs": {
+    "mtime": 1781510994.2747283,
+    "ast_hash": "aa6e4a4dc082ec99ece03ce1c9722fda",
+    "semantic_hash": "aa6e4a4dc082ec99ece03ce1c9722fda"
+  },
+  "caveman/tests/installer/unit.argv.test.mjs": {
+    "mtime": 1781510994.2767289,
+    "ast_hash": "33d418fff40d6dc6cab1bf1492caacff",
+    "semantic_hash": "33d418fff40d6dc6cab1bf1492caacff"
+  },
+  "caveman/tests/installer/unit.settings.test.mjs": {
+    "mtime": 1781510994.2787275,
+    "ast_hash": "6401b1e49f8c6646f7f80ba4a3e49fab",
+    "semantic_hash": "6401b1e49f8c6646f7f80ba4a3e49fab"
+  },
+  "caveman/tests/test_caveman_init.js": {
+    "mtime": 1781510994.2797291,
+    "ast_hash": "e6fef49c4e6841b801f9d6c894a5b8ae",
+    "semantic_hash": "e6fef49c4e6841b801f9d6c894a5b8ae"
+  },
+  "caveman/tests/test_caveman_stats.js": {
+    "mtime": 1781510994.2817304,
+    "ast_hash": "d3b1952803ce05af5e08bad093c9d104",
+    "semantic_hash": "d3b1952803ce05af5e08bad093c9d104"
+  },
+  "caveman/tests/test_compress_safety.py": {
+    "mtime": 1781510994.284731,
+    "ast_hash": "cdc294c662251a20edf5091c01fa8955",
+    "semantic_hash": "cdc294c662251a20edf5091c01fa8955"
+  },
+  "caveman/tests/test_hooks.py": {
+    "mtime": 1781510994.2877467,
+    "ast_hash": "7cecea533a7c5b9963e74256c0f1a34c",
+    "semantic_hash": "7cecea533a7c5b9963e74256c0f1a34c"
+  },
+  "caveman/tests/test_mcp_shrink.js": {
+    "mtime": 1781510994.2887452,
+    "ast_hash": "8224815a346a90b5f81927c6b8f7b0a2",
+    "semantic_hash": "8224815a346a90b5f81927c6b8f7b0a2"
+  },
+  "caveman/tests/test_repo_local_config.js": {
+    "mtime": 1781510994.2897434,
+    "ast_hash": "369ee4833f826e25ca232bcad1ea684a",
+    "semantic_hash": "369ee4833f826e25ca232bcad1ea684a"
+  },
+  "caveman/tests/test_symlink_flag.js": {
+    "mtime": 1781510994.2917435,
+    "ast_hash": "e57adfb67459468ecc874aa80e3470b6",
+    "semantic_hash": "e57adfb67459468ecc874aa80e3470b6"
+  },
+  "caveman/tests/test_validate_inline.py": {
+    "mtime": 1781510994.2927434,
+    "ast_hash": "943775a0b21e0d6001dd9c0dd37ccdce",
+    "semantic_hash": "943775a0b21e0d6001dd9c0dd37ccdce"
+  },
+  "caveman/tests/verify_repo.py": {
+    "mtime": 1781510994.2947414,
+    "ast_hash": "1f68ae9222dde8a1b66c6fe22602651b",
+    "semantic_hash": "1f68ae9222dde8a1b66c6fe22602651b"
+  },
+  "julie/__init__.py": {
+    "mtime": 1781621799.5886226,
+    "ast_hash": "d52216461219778a67b0cc69153ec3a4",
+    "semantic_hash": "d52216461219778a67b0cc69153ec3a4"
+  },
+  "julie/brain/__init__.py": {
+    "mtime": 1781514260.9739857,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "julie/brain/groq_client.py": {
+    "mtime": 1781621586.5313165,
+    "ast_hash": "cc3b0c233b8263180dd49a5898d8c040",
+    "semantic_hash": "cc3b0c233b8263180dd49a5898d8c040"
+  },
+  "julie/brain/prompt_builder.py": {
+    "mtime": 1781621618.50128,
+    "ast_hash": "8e7d47c6cc6908c548e077fbdacc2a58",
+    "semantic_hash": "8e7d47c6cc6908c548e077fbdacc2a58"
+  },
+  "julie/core/__init__.py": {
+    "mtime": 1781514260.9699786,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "julie/core/agent_handoff.py": {
+    "mtime": 1781514854.7111125,
+    "ast_hash": "ca467198bb50f6699a58bc8b954f43a1",
+    "semantic_hash": "ca467198bb50f6699a58bc8b954f43a1"
+  },
+  "julie/core/config.py": {
+    "mtime": 1781621404.5822773,
+    "ast_hash": "15ecaa5f9ba263849831b9ac32ff2af2",
+    "semantic_hash": "15ecaa5f9ba263849831b9ac32ff2af2"
+  },
+  "julie/core/database.py": {
+    "mtime": 1781514218.7219584,
+    "ast_hash": "00e3d1dec660d7656a4d08350162ce3c",
+    "semantic_hash": "00e3d1dec660d7656a4d08350162ce3c"
+  },
+  "julie/core/main.py": {
+    "mtime": 1781621784.6421402,
+    "ast_hash": "2b8a4d9c7ec74da651fd3606968a7cdd",
+    "semantic_hash": "2b8a4d9c7ec74da651fd3606968a7cdd"
+  },
+  "julie/core/memory.py": {
+    "mtime": 1781519361.94395,
+    "ast_hash": "b42d087de1821be5616832844696121b",
+    "semantic_hash": "b42d087de1821be5616832844696121b"
+  },
+  "julie/core/router.py": {
+    "mtime": 1781621421.426281,
+    "ast_hash": "f5f4bc4dd86f81ffae96c3b2af9ce094",
+    "semantic_hash": "f5f4bc4dd86f81ffae96c3b2af9ce094"
+  },
+  "julie/core/scheduler.py": {
+    "mtime": 1781514860.3475263,
+    "ast_hash": "1b772ccf93061776cfdc2986e994c429",
+    "semantic_hash": "1b772ccf93061776cfdc2986e994c429"
+  },
+  "julie/core/security.py": {
+    "mtime": 1781621446.767444,
+    "ast_hash": "92c33bd9962fa081266f578b15385ea3",
+    "semantic_hash": "92c33bd9962fa081266f578b15385ea3"
+  },
+  "julie/core/tool_executor.py": {
+    "mtime": 1781621521.8860705,
+    "ast_hash": "d00fe423ba6155b96906bb946dc1d0af",
+    "semantic_hash": "d00fe423ba6155b96906bb946dc1d0af"
+  },
+  "julie/terminal_client.py": {
+    "mtime": 1781522959.754121,
+    "ast_hash": "d19c6081bb164b43fc2deb53f9c4a888",
+    "semantic_hash": "d19c6081bb164b43fc2deb53f9c4a888"
+  },
+  "julie/tests/test_confirmation_flow.py": {
+    "mtime": 1781587603.5502508,
+    "ast_hash": "bbb1ccafdeeefe7e12d1d35e4f56591c",
+    "semantic_hash": "bbb1ccafdeeefe7e12d1d35e4f56591c"
+  },
+  "julie/tests/test_router.py": {
+    "mtime": 1781514805.130317,
+    "ast_hash": "0b2456a18e26eaca3e405fb0f894c4e5",
+    "semantic_hash": "0b2456a18e26eaca3e405fb0f894c4e5"
+  },
+  "julie/tests/test_security.py": {
+    "mtime": 1781514814.2866318,
+    "ast_hash": "c30d739dbf7427aaa4173eee9287addb",
+    "semantic_hash": "c30d739dbf7427aaa4173eee9287addb"
+  },
+  "julie/tests/test_terminal_client.py": {
+    "mtime": 1781522965.0836718,
+    "ast_hash": "d17a007ca125336ace5cba4821c53a94",
+    "semantic_hash": "d17a007ca125336ace5cba4821c53a94"
+  },
+  "julie/tests/test_tool_executor.py": {
+    "mtime": 1781514810.6130445,
+    "ast_hash": "99efc75769cd556e7864f7dcecc02383",
+    "semantic_hash": "99efc75769cd556e7864f7dcecc02383"
+  },
+  "julie/tools/__init__.py": {
+    "mtime": 1781514260.9719815,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "julie/tools/browser_tools.py": {
+    "mtime": 1781514851.8275194,
+    "ast_hash": "cac8ee59c159df5465054a53fc6df1ed",
+    "semantic_hash": "cac8ee59c159df5465054a53fc6df1ed"
+  },
+  "julie/tools/system_tools.py": {
+    "mtime": 1781621482.515056,
+    "ast_hash": "ebda7fdaa189ca43aabc06c645e79695",
+    "semantic_hash": "ebda7fdaa189ca43aabc06c645e79695"
+  },
+  "julie/voice/__init__.py": {
+    "mtime": 1781514260.9729786,
+    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "semantic_hash": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "julie/voice/listener.py": {
+    "mtime": 1781514845.1280265,
+    "ast_hash": "71e475039dd8d72b234e7ba42f47d644",
+    "semantic_hash": "71e475039dd8d72b234e7ba42f47d644"
+  },
+  "julie/voice/speaker.py": {
+    "mtime": 1781514847.4626915,
+    "ast_hash": "c7606423a67e90ed3fe744067dad034d",
+    "semantic_hash": "c7606423a67e90ed3fe744067dad034d"
+  },
+  "pyproject.toml": {
+    "mtime": 1781621804.5276875,
+    "ast_hash": "0fb58530a9a59bf98c8c73dd0c5ddcc0",
+    "semantic_hash": "0fb58530a9a59bf98c8c73dd0c5ddcc0"
+  }
+}
