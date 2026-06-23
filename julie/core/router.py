@@ -30,7 +30,7 @@ class ClassifiedIntent:
 
 # Filler prefixes to strip before matching (handles natural speech)
 _FILLER_PREFIXES = re.compile(
-    r"^(?:can you|could you|please|hey julie|julie|hey jarvis|jarvis|"
+    r"^(?:can you|could you|please|hey sixteen|sixteen|"
     r"would you|will you|i need you to|i want you to|"
     r"go ahead and|just)\s+",
     re.IGNORECASE,
@@ -66,7 +66,7 @@ DIRECT_PATTERNS = [
     (r"^read\s+(?:file|content)\s+(.+)$", IntentType.SYSTEM_ACTION, {"action": "read"}),
     (r"^write\s+file\s+(.+?)(?:\s+with\s+(.+))?$", IntentType.SYSTEM_ACTION, {"action": "write"}),
     (r"^search\s+(?:for\s+)?(.+?)(?:\s+on\s+(.+))?$", IntentType.BROWSER_ACTION, {"action": "search"}),
-    (r"^(?:show\s+)?(?:tokens|token usage|api usage|julie stats).*$", IntentType.INFORMATION, {"action": "token_summary"}),
+    (r"^(?:show\s+)?(?:tokens|token usage|api usage|sixteen stats).*$", IntentType.INFORMATION, {"action": "token_summary"}),
 ]
 
 

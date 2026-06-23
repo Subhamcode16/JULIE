@@ -1,16 +1,74 @@
-import { useEffect, useState, useRef, useMemo } from 'react'
+import React, { useEffect, useState, useRef, useMemo, Component, ErrorInfo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 import './App.css'
+import GradientOrb from './components/GradientOrb'
 
-type AppState = 'IDLE' | 'LISTENING' | 'THINKING' | 'SPEAKING'
+// Wrap console to prevent Tauri IPC circular JSON crash
+const wrapConsole = (method: 'log' | 'warn' | 'error') => {
+  const original = console[method];
+  console[method] = (...args) => {
+    const safeArgs = args.map(arg => {
+      try {
+        if (arg instanceof Error) return arg.message + '\n' + arg.stack;
+        if (typeof arg === 'object' && arg !== null) {
+          // Check if it's a Three.js object or React element which are usually circular
+          if ('isObject3D' in arg || '$$typeof' in arg) return Object.prototype.toString.call(arg);
+          // Removed JSON.stringify(arg) test
+          return arg;
+        }
+        return arg;
+      } catch (e) {
+        return `[Unserializable Object]`;
+      }
+    });
+    original(...safeArgs);
+  };
+};
+wrapConsole('log');
+wrapConsole('warn');
+wrapConsole('error');
+
+class CanvasErrorBoundary extends Component<{children: React.ReactNode}, {hasError: boolean, error: Error | null}> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("Canvas Error Caught by Boundary:");
+    console.error(error?.message || String(error));
+    console.error(errorInfo?.componentStack || "");
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ color: 'red', padding: '20px', zIndex: 9999 }}>
+          <h2>UI Render Crashed!</h2>
+          <p>Please share this error with the AI:</p>
+          <pre style={{ fontSize: '12px', whiteSpace: 'pre-wrap' }}>{this.state.error?.toString()}</pre>
+          <pre style={{ fontSize: '10px', whiteSpace: 'pre-wrap' }}>{this.state.error?.stack}</pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+
+type AppState = 'IDLE' | 'LISTENING' | 'THINKING' | 'SPEAKING' | 'SLEEPING'
 
 // Vertex Shader for the particle sphere
 const vertexShader = `
   uniform float uTime;
   uniform float uStateTime;
-  uniform int uState; // 0=IDLE, 1=LISTENING, 2=THINKING, 3=SPEAKING
+  uniform int uState; // 0=IDLE, 1=LISTENING, 2=THINKING, 3=SPEAKING, 4=SLEEPING
   uniform float uWaveActive;
   
   attribute float size;
@@ -74,16 +132,19 @@ const vertexShader = `
     float timeSpeed = 0.2;
     
     if (uState == 1) { // LISTENING
-      noiseAmp = 0.02;
-      timeSpeed = 0.1;
+      noiseAmp = 0.5 + sin(uStateTime * 5.0) * 0.1;
+      noiseFreq = 1.5;
     } else if (uState == 2) { // THINKING
-      noiseFreq = 2.5;
-      noiseAmp = 0.15;
-      timeSpeed = 1.2;
-    } else if (uState == 3) { // SPEAKING
+      noiseAmp = 0.4 + sin(uStateTime * 8.0) * 0.2;
       noiseFreq = 2.0;
+    } else if (uState == 3) { // SPEAKING
+      // More chaotic, audio-reactive
       noiseAmp = mix(0.1, 0.2, (sin(uStateTime * 15.0) + 1.0) * 0.5); // Pulse to voice
-      timeSpeed = 1.5;
+      noiseAmp += uWaveActive * 0.5; // Audio reactivity
+      noiseFreq = 2.5 + uWaveActive * 2.0;
+    } else if (uState == 4) { // SLEEPING
+      noiseAmp = 0.02; // Very still
+      noiseFreq = 0.5; // Very slow
     }
     
     // Apply noise displacement along normals (sphere expansion/contraction)
@@ -183,7 +244,11 @@ function ParticleSphere({ state }: { state: AppState }) {
   const materialRef = useRef<THREE.ShaderMaterial>(null)
   
   // State tracking for shader uniforms
-  const stateEnum = state === 'IDLE' ? 0 : state === 'LISTENING' ? 1 : state === 'THINKING' ? 2 : 3
+  let stateEnum = 0
+  if (state === 'LISTENING') stateEnum = 1
+  else if (state === 'THINKING') stateEnum = 2
+  else if (state === 'SPEAKING') stateEnum = 3
+  else if (state === 'SLEEPING') stateEnum = 4
   const [stateTime, setStateTime] = useState(0)
   const lastStateRef = useRef(state)
 
@@ -265,42 +330,192 @@ function ParticleSphere({ state }: { state: AppState }) {
 }
 
 export default function App() {
-  const [state, setState] = useState<AppState>('IDLE')
+  const [state, setState] = useState<AppState>('SLEEPING')
+  const [audioLevel, setAudioLevel] = useState(0)
+  const wsRef = useRef<WebSocket | null>(null)
+  const recognitionRef = useRef<any>(null)
+  
+  const inactivityTimerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    let ws: WebSocket
+    if (state !== 'SLEEPING') {
+      if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current)
+      inactivityTimerRef.current = setTimeout(() => {
+        setState('SLEEPING')
+      }, 15 * 60 * 1000) // 15 minutes
+    }
+  }, [state])
+  
+  // Audio playback setup
+  const audioCtxRef = useRef<AudioContext | null>(null)
+  const analyserRef = useRef<AnalyserNode | null>(null)
+  
+  useEffect(() => {
+    // Initialize Web Audio API
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)()
+    const analyser = ctx.createAnalyser()
+    analyser.fftSize = 256
+    analyser.connect(ctx.destination)
+    
+    // Browsers block AudioContext until user interaction
+    const resumeAudio = () => {
+      if (ctx.state === 'suspended') {
+        ctx.resume()
+      }
+    }
+    window.addEventListener('click', resumeAudio)
+    window.addEventListener('keydown', resumeAudio)
+    
+    audioCtxRef.current = ctx
+    analyserRef.current = analyser
+    
+    // Setup Audio Level tracking loop
+    let animationFrameId: number
+    const dataArray = new Uint8Array(analyser.frequencyBinCount)
+    
+    const updateAudioLevel = () => {
+      analyser.getByteFrequencyData(dataArray)
+      let sum = 0
+      for (let i = 0; i < dataArray.length; i++) {
+        sum += dataArray[i]
+      }
+      const avg = sum / dataArray.length
+      setAudioLevel(avg / 255) // Normalize 0-1
+      animationFrameId = requestAnimationFrame(updateAudioLevel)
+    }
+    updateAudioLevel()
+
+    // WebSocket Setup
     const connect = () => {
-      ws = new WebSocket('ws://127.0.0.1:8765/ws')
-      ws.onopen = () => console.log('Julie connected')
-      ws.onmessage = (e) => {
-        try {
-          const msg = JSON.parse(e.data)
-          if (msg.type === 'STATE_CHANGE') setState(msg.payload.state as AppState)
-        } catch {}
+      const ws = new WebSocket('ws://127.0.0.1:8766/ws')
+      ws.binaryType = 'arraybuffer'
+      wsRef.current = ws
+      
+      ws.onopen = () => console.log('Sixteen connected')
+      ws.onmessage = async (e) => {
+        if (typeof e.data === 'string') {
+          try {
+            const msg = JSON.parse(e.data)
+            if (msg.type === 'STATE_CHANGE') {
+              setState(msg.payload.state as AppState)
+            } else if (msg.type === 'USER_INPUT_TEXT_RESPONSE') {
+              // If there was an error (e.g. rate limit), return to IDLE so we aren't stuck LISTENING
+              if (msg.payload && msg.payload.success === false) {
+                console.error("Sixteen Error:", msg.payload.error)
+                setState('IDLE')
+              }
+            }
+          } catch {}
+        } else {
+          // Received binary audio data (WAV)
+          try {
+            const audioBuffer = await ctx.decodeAudioData(e.data)
+            const source = ctx.createBufferSource()
+            source.buffer = audioBuffer
+            source.connect(analyser)
+            source.start(0)
+          } catch (err) {
+            console.error("Error decoding audio:", err)
+          }
+        }
       }
       ws.onclose = () => setTimeout(connect, 3000)
     }
     connect()
-    return () => ws?.close()
-  }, [])
 
-  // Glow color based on state
-  const glowColors = {
-    IDLE: 'rgba(0, 150, 200, 0.1)',
-    LISTENING: 'rgba(0, 240, 255, 0.3)',
-    THINKING: 'rgba(140, 100, 255, 0.3)',
-    SPEAKING: 'rgba(0, 255, 200, 0.4)',
-  }
+    // Web Speech API Setup (Wake Word & Command)
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    let recognition: any;
+    
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = false;
+      
+      let isListeningForCommand = false;
+
+      const sendCommand = (text: string) => {
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+          try {
+            const msg = {
+              type: "USER_INPUT_TEXT",
+              id: Date.now().toString() + "-" + Math.floor(Math.random() * 1000000),
+              payload: { text, session_id: "voice_tauri", source: "voice" }
+            };
+            wsRef.current.send(JSON.stringify(msg));
+          } catch (e) {
+            console.error("Failed to send command:", e);
+          }
+        }
+      };
+
+      recognition.onresult = (event: any) => {
+        const last = event.results.length - 1;
+        const rawTranscript = event.results[last][0].transcript.toLowerCase().trim();
+        const transcript = rawTranscript.replace(/[.,!?]/g, '');
+        console.log("Heard:", transcript);
+        
+        const hasWakeWord = transcript.includes("hey sixteen") || transcript.includes("sixteen");
+        
+        if (!isListeningForCommand && hasWakeWord) {
+            // Wake word detected!
+            setState("LISTENING");
+            
+            // If there's more text after the wake word, process it immediately
+            const parts = transcript.split(/hey sixteen|sixteen/);
+            const cmd = parts[parts.length-1].trim();
+            
+            if (cmd.length > 0) {
+               sendCommand(cmd);
+            } else {
+               // Wait for the next speech result to be the command
+               isListeningForCommand = true;
+            }
+        } else if (isListeningForCommand) {
+            // This is the command following the wake word
+            sendCommand(transcript);
+            isListeningForCommand = false;
+        }
+      };
+
+      recognition.onend = () => {
+        // Auto-restart to keep listening infinitely (Soft Sleep)
+        try { recognition.start(); } catch(e){}
+      };
+
+      recognitionRef.current = recognition;
+      try { recognition.start(); } catch(e){}
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId)
+      window.removeEventListener('click', resumeAudio)
+      window.removeEventListener('keydown', resumeAudio)
+      wsRef.current?.close()
+      if (SpeechRecognition && recognition) {
+        try { recognition.onend = null; recognition.stop(); } catch(e){}
+      }
+    }
+  }, [])
 
   return (
     <div className="orb-root">
       <div className="orb-container">
-        <Canvas 
-          camera={{ position: [0, 0, 5], fov: 45 }}
-          gl={{ alpha: true, antialias: true }}
-        >
-          <ParticleSphere state={state} />
-        </Canvas>
+        <div className="drag-handle" />
+        <CanvasErrorBoundary>
+          <Canvas 
+            camera={{ position: [0, 0, 5], fov: 45 }}
+            gl={{ 
+              alpha: true, 
+              antialias: true, 
+              powerPreference: "high-performance",
+              preserveDrawingBuffer: true,
+              failIfMajorPerformanceCaveat: false 
+            }}
+          >
+            <GradientOrb size={0.5} state={state?.toLowerCase() || 'idle'} autoRotate={state !== 'SLEEPING'} audioLevel={audioLevel} />
+          </Canvas>
+        </CanvasErrorBoundary>
       </div>
     </div>
   )

@@ -45,7 +45,7 @@ def listen_and_transcribe():
     state = VoiceState.SLEEPING
     last_interaction_time = time.time()
     
-    logger.info("Listening for wake word 'Hey Julie'...")
+    logger.info("Listening for wake word 'Hey Sixteen'...")
     
     try:
         while True:
@@ -58,7 +58,7 @@ def listen_and_transcribe():
             # Read audio chunk
             pcm_data = mic_stream.read(CHUNK_SIZE, exception_on_overflow=False)
             
-            # If Julie is currently speaking, completely ignore the microphone to prevent echo loops
+            # If Sixteen is currently speaking, completely ignore the microphone to prevent echo loops
             if get_speaker().is_speaking:
                 last_interaction_time = time.time()  # Keep continuous mode alive while she speaks
                 continue
@@ -118,14 +118,14 @@ def listen_and_transcribe():
                 
                 if state == VoiceState.SLEEPING:
                     # Look for wake word
-                    if "julie" in text_lower:
+                    if "sixteen" in text_lower:
                         logger.success("Wake word detected! Entering continuous conversation mode.")
                         state = VoiceState.CONTINUOUS
                         last_interaction_time = time.time()
                         
                         # Check if they said a command immediately after the wake word
-                        # E.g. "Hey Julie what time is it"
-                        # We will send the full transcript; Julie's LLM is smart enough to handle it
+                        # E.g. "Hey Sixteen what time is it"
+                        # We will send the full transcript; Sixteen's LLM is smart enough to handle it
                         get_ipc_client().send_voice_input(transcript)
                         get_ipc_client().send_state_update("THINKING")
                 

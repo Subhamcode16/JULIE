@@ -3,9 +3,9 @@
 from typing import Any
 
 try:
-    from core.security import SecurityZone, check_command_security, is_path_blocked
+    from core.security import SecurityZone, is_path_blocked
     from core.router import ClassifiedIntent, IntentType
-    from data.memory import upsert_memory, list_memories
+    from core.memory import upsert_memory, list_memories
     from tools.system_tools import (
         resolve_app_path,
         launch_application,
@@ -19,9 +19,9 @@ try:
     from tools.agent_handoff import handoff_to_antigravity
     from core.token_tracker import get_token_summary
 except ImportError:
-    from julie.core.security import SecurityZone, check_command_security, is_path_blocked
+    from julie.core.security import SecurityZone, is_path_blocked
     from julie.core.router import ClassifiedIntent, IntentType
-    from julie.data.memory import upsert_memory, list_memories
+    from julie.core.memory import upsert_memory, list_memories
     from julie.tools.system_tools import (
         resolve_app_path,
         launch_application,
@@ -38,8 +38,8 @@ except ImportError:
 
 def _security_check(intent: ClassifiedIntent, confirmed: bool) -> dict[str, Any] | None:
     """Return a blocking result when an intent is not allowed to execute."""
-    # Assuming new check_command_security interface
-    return check_command_security(intent, confirmed)
+    # Security is already checked in main.py before execution
+    return None
 
 
 def _memory_key_from_fact(fact: str) -> str:

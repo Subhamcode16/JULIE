@@ -1,5 +1,7 @@
 use tauri::{Manager, PhysicalPosition};
 
+// No more manual Win32 Z-order hacks!
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   tauri::Builder::default()
@@ -12,15 +14,21 @@ pub fn run() {
         )?;
       }
 
-      // Position the orb at the top-center of the primary monitor
       if let Some(window) = app.get_webview_window("main") {
+        let _ = window.set_ignore_cursor_events(true);
+
+        // Center it perfectly at the TOP of the screen using Tauri's native math
         if let Ok(Some(monitor)) = window.current_monitor() {
-          let screen_width = monitor.size().width;
-          let orb_width: u32 = 100;
-          let x = ((screen_width - orb_width) / 2) as i32;
-          let y: i32 = 0; // Flush to the top edge
-          let _ = window.set_position(PhysicalPosition::new(x, y));
+            let monitor_pos = monitor.position(); // Physical Position
+            let monitor_size = monitor.size(); // Physical Size
+            if let Ok(window_size) = window.outer_size() {
+                let x = monitor_pos.x + ((monitor_size.width as i32 - window_size.width as i32) / 2);
+                let y = monitor_pos.y; // Top of the monitor
+                let _ = window.set_position(PhysicalPosition::new(x, y));
+            }
         }
+
+        // No longer injecting into Windows desktop
       }
 
       Ok(())
