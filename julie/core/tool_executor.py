@@ -14,7 +14,7 @@ try:
         read_file,
         write_file,
     )
-    from tools.browser_tools import google_search, scrape_url
+    from tools.browser_tools import google_search, scrape_url, youtube_search_and_play
     from tools.screen_tools import analyze_screen
     from tools.agent_handoff import handoff_to_antigravity
     from core.token_tracker import get_token_summary
@@ -30,7 +30,7 @@ except ImportError:
         read_file,
         write_file,
     )
-    from julie.tools.browser_tools import google_search, scrape_url
+    from julie.tools.browser_tools import google_search, scrape_url, youtube_search_and_play
     from julie.tools.screen_tools import analyze_screen
     from julie.tools.agent_handoff import handoff_to_antigravity
     from julie.core.token_tracker import get_token_summary
@@ -119,12 +119,21 @@ async def execute_intent(intent: ClassifiedIntent, db: Any = None, confirmed: bo
         target = intent.params.get("url_or_query")
         
         if action == "search" and target:
-            result = await google_search(target)
-            return {
-                "success": result["success"],
-                "tool": "google_search",
-                "detail": result,
-            }
+            platform = str(intent.params.get("platform") or "").lower()
+            if "youtube" in platform or "youtube" in target.lower():
+                result = await youtube_search_and_play(target)
+                return {
+                    "success": result["success"],
+                    "tool": "youtube_search_and_play",
+                    "detail": result,
+                }
+            else:
+                result = await google_search(target)
+                return {
+                    "success": result["success"],
+                    "tool": "google_search",
+                    "detail": result,
+                }
         
         if action == "navigate" and target:
             result = await scrape_url(target)

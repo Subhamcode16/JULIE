@@ -25,6 +25,7 @@ try:
     from core.tool_executor import execute_intent
     from core.scheduler import get_scheduler
     from core.cache import get_cached_response, set_cached_response
+    from core.agent_core import execute_with_verification
     import core.whatsapp_gateway as whatsapp_gateway
 except ImportError:
     from julie.brain.groq_client import answer_with_llm, classify_with_llm, parse_classifier_json
@@ -38,6 +39,7 @@ except ImportError:
     from julie.core.tool_executor import execute_intent
     from julie.core.scheduler import get_scheduler
     from julie.core.cache import get_cached_response, set_cached_response
+    from julie.core.agent_core import execute_with_verification
     import julie.core.whatsapp_gateway as whatsapp_gateway
 
 
@@ -323,7 +325,7 @@ async def handle_confirmation(payload: dict) -> dict:
     if age_seconds > CONFIRMATION_TIMEOUT_SECONDS:
         return {"success": False, "response": "Confirmation timed out", "action_id": action_id}
 
-    exec_result = await execute_intent(pending["classified"], db=db, confirmed=True)
+    exec_result = await execute_with_verification(pending["classified"], db=db)
     response_text = format_execution_response(exec_result)
     try:
         await save_conversation_turn(
@@ -413,7 +415,7 @@ async def handle_user_input(payload: dict, msg_id: str) -> dict:
             "tool": action_name,
         }
 
-    execution_result = await execute_intent(classified, db=db)
+    execution_result = await execute_with_verification(classified, db=db)
     if not execution_result.get("success") and classified.intent_type in {IntentType.INFORMATION, IntentType.CONVERSATION}:
         cached = get_cached_response(text)
         if cached:

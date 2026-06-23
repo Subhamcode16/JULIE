@@ -5,6 +5,13 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import Optional
 
+class SecurityZone(Enum):
+    """Security classification for intents."""
+    GREEN = "green"    # Safe, auto-execute
+    YELLOW = "yellow"  # Requires confirmation
+    RED = "red"        # Hard-blocked
+
+
 
 class IntentType(Enum):
     """Intent classification types."""
@@ -25,6 +32,7 @@ class ClassifiedIntent:
     confidence: float
     params: dict
     raw_input: str
+    security_zone: SecurityZone = SecurityZone.GREEN
     used_llm: bool = False
 
 
@@ -96,16 +104,29 @@ def classify_intent(text: str) -> ClassifiedIntent:
                             params["content"] = match.group(2) or ""
                     elif intent_type == IntentType.BROWSER_ACTION:
                         params["url_or_query"] = match.group(1).strip()
+                        if action == "search" and len(match.groups()) > 1 and match.group(2):
+                            params["platform"] = match.group(2).strip()
                     elif intent_type == IntentType.MEMORY and action == "save":
                         params["fact"] = match.group(1).strip()
                     elif intent_type == IntentType.SCHEDULE:
                         params["schedule_desc"] = match.group(1).strip()
+                        
+                # Determine security zone based on intent and action
+                zone = SecurityZone.GREEN
+                if intent_type == IntentType.SYSTEM_ACTION:
+                    if action == "terminal" or action == "delete":
+                        zone = SecurityZone.RED
+                    elif action == "write":
+                        zone = SecurityZone.YELLOW
+                elif intent_type == IntentType.AGENT_HANDOFF:
+                    zone = SecurityZone.YELLOW
 
                 return ClassifiedIntent(
                     intent_type=intent_type,
                     confidence=0.95,
                     params=params,
                     raw_input=text,
+                    security_zone=zone,
                     used_llm=False,
                 )
 
@@ -115,6 +136,7 @@ def classify_intent(text: str) -> ClassifiedIntent:
         confidence=0.3,
         params={"query": text},
         raw_input=text,
+        security_zone=SecurityZone.GREEN,
         used_llm=False,
     )
 

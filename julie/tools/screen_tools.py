@@ -48,3 +48,18 @@ async def analyze_screen(prompt: str) -> Dict[str, Any]:
     except Exception as e:
         logger.error(f"Screen analysis error: {e}")
         return {"success": False, "error": str(e)}
+
+async def find_text_on_screen(text: str) -> Dict[str, Any]:
+    """Find specific text on the screen using Vision OCR."""
+    prompt = f"Find the exact location of the text '{text}' on the screen. Return its approximate bounding box or position."
+    return await analyze_screen(prompt)
+
+async def verify_action(expected_state: str) -> bool:
+    """Take a screenshot and verify if the expected UI state is present."""
+    prompt = f"Does this screenshot show that the following state is achieved: '{expected_state}'? Reply strictly with YES or NO, followed by a brief reason."
+    result = await analyze_screen(prompt)
+    if result["success"]:
+        answer = result["answer"].upper()
+        return "YES" in answer[:10]
+    return False
+

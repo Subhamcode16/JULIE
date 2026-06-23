@@ -332,6 +332,7 @@ function ParticleSphere({ state }: { state: AppState }) {
 export default function App() {
   const [state, setState] = useState<AppState>('SLEEPING')
   const [audioLevel, setAudioLevel] = useState(0)
+  const [pendingAction, setPendingAction] = useState<{id: string, text: string} | null>(null)
   const wsRef = useRef<WebSocket | null>(null)
   const recognitionRef = useRef<any>(null)
   
@@ -399,11 +400,17 @@ export default function App() {
             if (msg.type === 'STATE_CHANGE') {
               setState(msg.payload.state as AppState)
             } else if (msg.type === 'USER_INPUT_TEXT_RESPONSE') {
-              // If there was an error (e.g. rate limit), return to IDLE so we aren't stuck LISTENING
-              if (msg.payload && msg.payload.success === false) {
+              if (msg.payload && msg.payload.needs_confirmation) {
+                setPendingAction({
+                  id: msg.payload.action_id,
+                  text: msg.payload.response
+                });
+              } else if (msg.payload && msg.payload.success === false) {
                 console.error("Sixteen Error:", msg.payload.error)
                 setState('IDLE')
               }
+            } else if (msg.type === 'CONFIRM_ACTION_RESPONSE') {
+               setPendingAction(null);
             }
           } catch {}
         } else {
@@ -516,6 +523,43 @@ export default function App() {
             <GradientOrb size={0.5} state={state?.toLowerCase() || 'idle'} autoRotate={state !== 'SLEEPING'} audioLevel={audioLevel} />
           </Canvas>
         </CanvasErrorBoundary>
+        
+        {pendingAction && (
+          <div style={{
+            position: 'absolute', top: '10px', left: '50%', transform: 'translateX(-50%)',
+            background: 'rgba(0,0,0,0.8)', color: 'white', padding: '15px', borderRadius: '8px', zIndex: 10,
+            display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center', border: '1px solid yellow'
+          }}>
+            <p style={{ margin: 0 }}>{pendingAction.text}</p>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button 
+                onClick={() => {
+                  wsRef.current?.send(JSON.stringify({
+                    type: "CONFIRM_ACTION",
+                    id: Date.now().toString(),
+                    payload: { action_id: pendingAction.id, decision: "confirm" }
+                  }));
+                }}
+                style={{ background: 'green', color: 'white', border: 'none', padding: '5px 15px', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                Approve
+              </button>
+              <button 
+                onClick={() => {
+                  wsRef.current?.send(JSON.stringify({
+                    type: "CONFIRM_ACTION",
+                    id: Date.now().toString(),
+                    payload: { action_id: pendingAction.id, decision: "cancel" }
+                  }));
+                  setPendingAction(null);
+                }}
+                style={{ background: 'red', color: 'white', border: 'none', padding: '5px 15px', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                Deny
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
