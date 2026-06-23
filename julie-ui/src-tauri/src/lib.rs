@@ -15,8 +15,7 @@ pub fn run() {
       }
 
       if let Some(window) = app.get_webview_window("main") {
-        let _ = window.set_ignore_cursor_events(true);
-
+        // We will no longer set_ignore_cursor_events(true) on the main window if it needs dragging
         // Center it perfectly at the TOP of the screen using Tauri's native math
         if let Ok(Some(monitor)) = window.current_monitor() {
             let monitor_pos = monitor.position(); // Physical Position
@@ -27,8 +26,10 @@ pub fn run() {
                 let _ = window.set_position(PhysicalPosition::new(x, y));
             }
         }
+      }
 
-        // No longer injecting into Windows desktop
+      if let Some(cursor_window) = app.get_webview_window("ai-cursor") {
+        let _ = cursor_window.set_ignore_cursor_events(true);
       }
 
       Ok(())

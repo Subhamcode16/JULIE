@@ -462,21 +462,22 @@ export default function App() {
         const transcript = rawTranscript.replace(/[.,!?]/g, '');
         console.log("Heard:", transcript);
         
-        const hasWakeWord = transcript.includes("hey sixteen") || transcript.includes("sixteen");
+        const hasWakeWord = transcript.includes("hey sixteen") || transcript.includes("sixteen") || transcript.includes("hey 16") || transcript.includes("16");
         
         if (!isListeningForCommand && hasWakeWord) {
             // Wake word detected!
             setState("LISTENING");
             
             // If there's more text after the wake word, process it immediately
-            const parts = transcript.split(/hey sixteen|sixteen/);
+            const parts = transcript.split(/hey sixteen|sixteen|hey 16|16/);
             const cmd = parts[parts.length-1].trim();
-            
             if (cmd.length > 0) {
                sendCommand(cmd);
             } else {
                // Wait for the next speech result to be the command
                isListeningForCommand = true;
+               // Tell backend the wake word was heard so it can acknowledge (e.g. "Yes?")
+               sendCommand("sixteen");
             }
         } else if (isListeningForCommand) {
             // This is the command following the wake word

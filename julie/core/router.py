@@ -23,6 +23,8 @@ class IntentType(Enum):
     SCHEDULE = "schedule"
     MEMORY = "memory"
     CONVERSATION = "conversation"
+    CONTEXTUAL_ACTION = "contextual_action"
+    AUTONOMOUS_ACTION = "autonomous_action"
 
 
 @dataclass
@@ -75,6 +77,8 @@ DIRECT_PATTERNS = [
     (r"^write\s+file\s+(.+?)(?:\s+with\s+(.+))?$", IntentType.SYSTEM_ACTION, {"action": "write"}),
     (r"^search\s+(?:for\s+)?(.+?)(?:\s+on\s+(.+))?$", IntentType.BROWSER_ACTION, {"action": "search"}),
     (r"^(?:show\s+)?(?:tokens|token usage|api usage|sixteen stats).*$", IntentType.INFORMATION, {"action": "token_summary"}),
+    (r"^type\s+(.+?)\s+(?:in\s+here|here)$", IntentType.CONTEXTUAL_ACTION, {"action": "type"}),
+    (r"^(?:book|buy|find)\s+(.+?)$", IntentType.AUTONOMOUS_ACTION, {"action": "autonomous_web"}),
 ]
 
 
@@ -110,6 +114,10 @@ def classify_intent(text: str) -> ClassifiedIntent:
                         params["fact"] = match.group(1).strip()
                     elif intent_type == IntentType.SCHEDULE:
                         params["schedule_desc"] = match.group(1).strip()
+                    elif intent_type == IntentType.CONTEXTUAL_ACTION and action == "type":
+                        params["text"] = match.group(1).strip()
+                    elif intent_type == IntentType.AUTONOMOUS_ACTION:
+                        params["goal"] = match.group(0).strip()
                         
                 # Determine security zone based on intent and action
                 zone = SecurityZone.GREEN

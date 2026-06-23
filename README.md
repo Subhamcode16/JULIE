@@ -1,138 +1,78 @@
 <div align="center">
-  <h1>Sixteen OS</h1>
-  <p><b>The High-Performance Agentic Operating System for Windows</b></p>
-  
-  [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-  [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
-  [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com)
-  [![React Three Fiber](https://img.shields.io/badge/React_Three_Fiber-Tauri-purple.svg)](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction)
+  <img src="julie-ui/public/sixteen-logo.png" alt="Sixteen AI" width="120" />
+  <h1>Sixteen</h1>
+  <p><strong>The Premium Agentic AI Operating System</strong></p>
+
+  <p>
+    <a href="#overview">Overview</a> •
+    <a href="#features">Features</a> •
+    <a href="#capabilities">Capabilities</a> •
+    <a href="#tech-stack">Tech Stack</a> •
+    <a href="#installation">Installation</a>
+  </p>
 </div>
 
 ---
 
-## ⚡ The Next Evolution of Personal Computing
+## Overview
 
-**Sixteen** is not just another chatbot or wrapper. It is a deeply integrated, highly specialized AI operating system designed for execution, autonomy, and security. Built with a robust backend architecture, Sixteen acts as a world-class digital chief of staff—capable of interacting with your file system, web browsers, and terminal with the same dexterity as a human engineer.
+**Sixteen** is not just an assistant—it is a deeply integrated, highly autonomous **Agentic Operating System** designed for modern workflows. Operating primarily through a visually unobtrusive, always-on-top transparent UI (the "Orb" and the "AI Cursor"), Sixteen serves as a bridge between human intent and computer execution.
 
-> [!NOTE]  
-> Sixteen is designed exclusively for high-end automation, research, and technical delegation, completely redefining what a personal assistant can do.
-
----
-
-## 🧠 Core Features & Capabilities
-
-### 1. Vision & Verification Engine
-Sixteen doesn't just guess what happens after clicking a button—it **sees** it.
-* **Intent → Plan → Execute → Verify:** A closed-loop execution pipeline.
-* **Automated Screenshots:** Utilizes MSS to silently capture the screen post-execution.
-* **LLM Verification:** Passes the active screen state to advanced Vision Models (Groq) to ensure an action achieved the desired UI state before proceeding.
-
-### 2. Stealth Web Automation
-* **CloakBrowser Integration:** Powered by stealth-patched Chromium to bypass anti-bot detections.
-* **Humanized Interactions:** Avoids rigid element scraping by analyzing the DOM and performing human-like cursor movements and clicks.
-* **Native YouTube & Media Handling:** Tell Sixteen to search for a video, and it will spawn a headed, persistent browser session to play media natively.
-
-### 3. Dynamic State Modes
-Sixteen adapts its cognitive processing and tool availability based on the task:
-* **Normal Mode:** Conversational, helpful, and concise.
-* **Engineering Mode:** Deep technical analysis, architecture design, and strict terminal/system commands.
-* **Research Mode:** Aggressive web scraping, cross-referencing, and factual synthesis with cited sources.
-* **Creator Mode:** Expanded context window for creative writing, asset generation, and brainstorming.
-
-### 4. Advanced Security Matrix
-With deep system access comes deep responsibility. Sixteen classifies all intents into a rigid, 3-tier Security Zone system:
-* 🟢 **Green Zone:** Safe operations (read files, browse web, view clipboard). Executed instantly.
-* 🟡 **Yellow Zone:** High-risk operations (write files, modify data). Intercepted instantly. The React UI spawns an overlay requiring explicit **Approve/Deny** confirmation before proceeding.
-* 🔴 **Red Zone:** Destructive operations (format drives, system32 access). Hard-blocked at the kernel level.
-
-### 5. Antigravity Delegation
-Why do it yourself when you can delegate?
-* **Subagent Invocation:** Sixteen acts as the orchestrator, seamlessly handing off heavy, multi-step engineering tasks to specialized Antigravity CLI agents in detached processes.
+Combining real-time screen vision, advanced UI accessibility hooks, and an autonomous "Action-Observation" loop, Sixteen is capable of fully taking over the system to execute complex browser-based or system-level tasks.
 
 ---
 
-## 🛠️ System Architecture
+## Features
 
-```mermaid
-graph TD
-    A[Voice / Text Input] --> B(Intent Classifier)
-    B --> C{Security Matrix}
-    
-    C -->|Green| D(Execution Engine)
-    C -->|Yellow| E[React 3D HUD Approval]
-    C -->|Red| F[Hard Block]
-    
-    E -->|Approved| D
-    
-    D --> G[CloakBrowser Action]
-    D --> H[System Action / Antigravity]
-    
-    G --> I(Vision Verification)
-    H --> I
-    
-    I -->|Verified| J[Memory Update & Audio Response]
-    I -->|Failed| K[Correction Loop]
-```
+- **The Orb Interface:** A sleek, transparent, always-on-top React/Tauri component that visually indicates the AI's current state (IDLE, LISTENING, THINKING, SPEAKING).
+- **Agentic Computer Use & AI Cursor:** An overlay cursor controlled by Sixteen that mimics human movements and performs high-level automation, giving you visual feedback of the AI's actions.
+- **Contextual Pointing (Hybrid Approach):** Simply point at an element on your screen and tell Sixteen, *"Type XYZ in here."* Using the Windows UIAutomation API combined with Groq Vision fallback, Sixteen instantly understands your pointer's context.
+- **Action-Observation Loop:** Give Sixteen a high-level goal (e.g., *"Book a flight to NYC"*). It will recursively analyze the browser screen, determine the next steps, and execute UI events (clicks, typing, navigation) completely autonomously.
+- **Always-on Wake Word:** Continuous local background listening with ultra-low latency, instantly activating the system when it hears *"Hey, Sixteen"*.
+- **Physical Interruptibility:** When Sixteen is autonomously controlling the mouse, simply moving your physical mouse will interrupt and cancel the AI's current task, instantly returning control to you.
 
 ---
 
-## 📦 Tech Stack
+## Capabilities
 
-| Category | Technologies | Purpose |
-|----------|-------------|---------|
-| **Backend Core** | FastAPI, Uvicorn, Python 3.11 | High-performance async processing engine. |
-| **Frontend UI** | React, Three.js (R3F), Tauri | Lightweight, hardware-accelerated 3D holographic interface. |
-| **AI / Brain** | Groq (LLaMA 3.2 Vision) | Ultra-low latency inference and visual verification. |
-| **Browser Engine**| CloakBrowser, Playwright | Undetectable, humanized web automation. |
-| **Voice Stack** | faster-whisper, kokoro-onnx, openwakeword | Local, offline wake-word detection, STT, and TTS. |
-| **System Tools** | MSS, PyAutoGUI, aiosqlite | Screen capture, OS-level macro control, and fast persistent memory. |
-
----
-
-## 🚀 Quick Start Guide
-
-### Prerequisites
-
-| Requirement | Description | Link |
-|-------------|-------------|------|
-| **Python 3.11+** | Required for backend services. | [Download](https://www.python.org/) |
-| **Node.js 18+** | Required for the React/Tauri HUD. | [Download](https://nodejs.org/) |
-| **Groq API Key** | Ultra-fast inference engine access. | [Get Key](https://console.groq.com/) |
-
-### Local Setup
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/YourUsername/SixteenOS.git
-cd SixteenOS
-
-# 2. Configure Environment
-cp julie/.env.example julie/.env
-# Add your GEMINI_API_KEY and GROQ_API_KEY to the .env file
-
-# 3. Start the entire system via batch script
-.\start-tunnel.bat
-```
-
-> [!IMPORTANT]  
-> Ensure your microphone is correctly configured in your OS settings, as Sixteen relies on continuous background listening for the "Hey Sixteen" wake word.
+| Capability | Description |
+| :--- | :--- |
+| **System Navigation** | Launch applications, manage files, and execute terminal commands. |
+| **Web Navigation** | Open URLs, perform Google searches, or play specific YouTube videos autonomously. |
+| **Autonomous Booking** | Navigate flight, hotel, or booking websites with the Action-Observation loop. |
+| **Visual Analysis** | Take screenshots and ask deep questions about what is currently visible on the screen. |
+| **Memory** | Remember important facts across sessions through the integrated SQLite database. |
+| **Agent Handoff** | Delegate complex coding tasks to the integrated `Antigravity` CLI tools. |
 
 ---
 
-## 🛡️ Contributing & Security
+## Tech Stack
 
-> [!CAUTION]  
-> **Never commit your `.env` file or API keys!** Sixteen possesses full filesystem and terminal access. Do not expose your instance publicly without rigorous authentication middleware.
+### Frontend / UI
+- **Framework:** React 18 & TypeScript
+- **Desktop Runtime:** Tauri v2
+- **Build Tool:** Vite
+- **Styling:** CSS-in-JS & Vanilla CSS with modern animations
 
-If you'd like to contribute to the core orchestration engine or add new CLI tools:
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### Backend / Core
+- **Server:** FastAPI (Python 3.11)
+- **AI Core:** Groq API (Llama-3-70B & LLaVA Vision models)
+- **Database:** SQLite & aiosqlite
+- **Event Bus:** Asynchronous WebSockets (`websockets`)
+
+### Agentic Capabilities
+- **Screen Capture:** MSS & Pillow (with aggressive caching/compression)
+- **Computer Vision:** Groq Vision models for screenshot-to-action inference
+- **UI Automation:** Windows `uiautomation`, `pyautogui`, & `pynput`
+- **Browser Control:** Playwright & `CloakBrowser` framework for isolated execution
+
+### Voice Pipeline
+- **Speech-to-Text:** Faster-Whisper
+- **Text-to-Speech:** Kokoro-ONNX
+- **Wake Word Detection:** OpenWakeWord & Web Speech API
 
 ---
 
 <div align="center">
-  <p><i>"The future of computing isn't typing; it's delegating."</i></p>
+  <sub>Built for the future of Human-Computer Interaction.</sub>
 </div>

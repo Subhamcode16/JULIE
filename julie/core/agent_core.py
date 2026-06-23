@@ -2,10 +2,15 @@
 
 import asyncio
 from typing import Dict, Any, List
-from loguru import logger
 from core.router import ClassifiedIntent
 from core.tool_executor import execute_intent
 from tools.screen_tools import verify_action
+from tools.accessibility_tools import get_element_under_cursor
+from tools.browser_tools import get_browser_context
+from brain.groq_client import answer_with_vision
+from core.cursor_tracker import cursor_tracker
+import pyautogui
+import json
 
 async def execute_with_verification(intent: ClassifiedIntent, db=None) -> Dict[str, Any]:
     """

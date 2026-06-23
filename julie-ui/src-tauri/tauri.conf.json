@@ -12,6 +12,7 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Sixteen",
         "additionalBrowserArgs": "--disable-gpu-sandbox --ignore-gpu-blocklist",
         "width": 250,
@@ -25,6 +26,20 @@
         "center": false,
         "x": 0,
         "y": 0
+      },
+      {
+        "label": "ai-cursor",
+        "title": "Sixteen Cursor Overlay",
+        "width": 1920,
+        "height": 1080,
+        "resizable": false,
+        "fullscreen": true,
+        "transparent": true,
+        "decorations": false,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "center": true,
+        "skipTaskbar": true
       }
     ],
     "security": {

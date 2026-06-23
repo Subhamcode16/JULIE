@@ -118,7 +118,7 @@ def listen_and_transcribe():
                 
                 if state == VoiceState.SLEEPING:
                     # Look for wake word
-                    if "sixteen" in text_lower:
+                    if "sixteen" in text_lower or "16" in text_lower:
                         logger.success("Wake word detected! Entering continuous conversation mode.")
                         state = VoiceState.CONTINUOUS
                         last_interaction_time = time.time()

@@ -18,6 +18,7 @@ try:
     from tools.screen_tools import analyze_screen
     from tools.agent_handoff import handoff_to_antigravity
     from core.token_tracker import get_token_summary
+    from tools.agentic_tools import execute_contextual_action, autonomous_browser_loop
 except ImportError:
     from julie.core.security import SecurityZone, is_path_blocked
     from julie.core.router import ClassifiedIntent, IntentType
@@ -34,6 +35,7 @@ except ImportError:
     from julie.tools.screen_tools import analyze_screen
     from julie.tools.agent_handoff import handoff_to_antigravity
     from julie.core.token_tracker import get_token_summary
+    from julie.tools.agentic_tools import execute_contextual_action, autonomous_browser_loop
 
 
 def _security_check(intent: ClassifiedIntent, confirmed: bool) -> dict[str, Any] | None:
@@ -217,6 +219,27 @@ async def execute_intent(intent: ClassifiedIntent, db: Any = None, confirmed: bo
             "success": False,
             "error": "Screen actions are not implemented yet",
         }
+
+    if intent.intent_type == IntentType.CONTEXTUAL_ACTION:
+        action = intent.params.get("action")
+        if action == "type":
+            text = intent.params.get("text", "")
+            result = await execute_contextual_action("type", text)
+            return {
+                "success": result.get("success", False),
+                "tool": "execute_contextual_action",
+                "detail": result,
+            }
+
+    if intent.intent_type == IntentType.AUTONOMOUS_ACTION:
+        goal = intent.params.get("goal")
+        if goal:
+            result = await autonomous_browser_loop(goal)
+            return {
+                "success": result.get("success", False),
+                "tool": "autonomous_browser_loop",
+                "detail": result,
+            }
 
     if intent.intent_type == IntentType.INFORMATION and intent.params.get("action") == "token_summary":
         if db is None:
