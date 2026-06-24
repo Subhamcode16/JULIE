@@ -73,6 +73,65 @@ Combining real-time screen vision, advanced UI accessibility hooks, and an auton
 
 ---
 
+## Installation
+
+### Prerequisites
+- Windows 10/11 (due to `uiautomation` dependencies)
+- Python 3.11+
+- Node.js 18+ and `npm`
+- Git
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Subhamcode16/SIXTEEN.git
+cd SIXTEEN
+```
+
+### 2. Set Up the Python Backend
+Sixteen relies on a FastAPI backend for AI processing and voice integration.
+```bash
+# Create a virtual environment
+python -m venv .venv311
+
+# Activate the virtual environment
+.venv311\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+Set up your environment variables by creating a `.env` file in the root directory:
+```env
+GROQ_API_KEY=your_groq_api_key_here
+```
+
+### 3. Set Up the Tauri/React Frontend
+Open a **new** terminal window and run:
+```bash
+cd julie-ui
+npm install
+```
+
+### 4. Running Sixteen
+To run Sixteen, you need to start both the Python backend and the Tauri frontend.
+
+**Terminal 1 (Backend):**
+```bash
+# From the root directory
+call .venv311\Scripts\activate
+uvicorn julie.core.main:app --host 127.0.0.1 --port 8765
+```
+
+**Terminal 2 (Frontend):**
+```bash
+# From the julie-ui directory
+npm run tauri dev
+```
+
+The Sixteen Orb will appear as a transparent overlay on your screen. Say *"Hey Sixteen"* to wake it up!
+
+---
+
 <div align="center">
   <sub>Built for the future of Human-Computer Interaction.</sub>
 </div>
