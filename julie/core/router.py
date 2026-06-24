@@ -5,6 +5,13 @@ from enum import Enum
 from dataclasses import dataclass
 from typing import Optional
 
+class SecurityZone(Enum):
+    """Security classification for intents."""
+    GREEN = "green"    # Safe, auto-execute
+    YELLOW = "yellow"  # Requires confirmation
+    RED = "red"        # Hard-blocked
+
+
 
 class IntentType(Enum):
     """Intent classification types."""
@@ -16,6 +23,8 @@ class IntentType(Enum):
     SCHEDULE = "schedule"
     MEMORY = "memory"
     CONVERSATION = "conversation"
+    CONTEXTUAL_ACTION = "contextual_action"
+    AUTONOMOUS_ACTION = "autonomous_action"
 
 
 @dataclass
@@ -25,12 +34,13 @@ class ClassifiedIntent:
     confidence: float
     params: dict
     raw_input: str
+    security_zone: SecurityZone = SecurityZone.GREEN
     used_llm: bool = False
 
 
 # Filler prefixes to strip before matching (handles natural speech)
 _FILLER_PREFIXES = re.compile(
-    r"^(?:can you|could you|please|hey julie|julie|hey jarvis|jarvis|"
+    r"^(?:can you|could you|please|hey sixteen|sixteen|"
     r"would you|will you|i need you to|i want you to|"
     r"go ahead and|just)\s+",
     re.IGNORECASE,
@@ -66,7 +76,9 @@ DIRECT_PATTERNS = [
     (r"^read\s+(?:file|content)\s+(.+)$", IntentType.SYSTEM_ACTION, {"action": "read"}),
     (r"^write\s+file\s+(.+?)(?:\s+with\s+(.+))?$", IntentType.SYSTEM_ACTION, {"action": "write"}),
     (r"^search\s+(?:for\s+)?(.+?)(?:\s+on\s+(.+))?$", IntentType.BROWSER_ACTION, {"action": "search"}),
-    (r"^(?:show\s+)?(?:tokens|token usage|api usage|julie stats).*$", IntentType.INFORMATION, {"action": "token_summary"}),
+    (r"^(?:show\s+)?(?:tokens|token usage|api usage|sixteen stats).*$", IntentType.INFORMATION, {"action": "token_summary"}),
+    (r"^type\s+(.+?)\s+(?:in\s+here|here)$", IntentType.CONTEXTUAL_ACTION, {"action": "type"}),
+    (r"^(?:book|buy|find)\s+(.+?)$", IntentType.AUTONOMOUS_ACTION, {"action": "autonomous_web"}),
 ]
 
 
@@ -96,16 +108,33 @@ def classify_intent(text: str) -> ClassifiedIntent:
                             params["content"] = match.group(2) or ""
                     elif intent_type == IntentType.BROWSER_ACTION:
                         params["url_or_query"] = match.group(1).strip()
+                        if action == "search" and len(match.groups()) > 1 and match.group(2):
+                            params["platform"] = match.group(2).strip()
                     elif intent_type == IntentType.MEMORY and action == "save":
                         params["fact"] = match.group(1).strip()
                     elif intent_type == IntentType.SCHEDULE:
                         params["schedule_desc"] = match.group(1).strip()
+                    elif intent_type == IntentType.CONTEXTUAL_ACTION and action == "type":
+                        params["text"] = match.group(1).strip()
+                    elif intent_type == IntentType.AUTONOMOUS_ACTION:
+                        params["goal"] = match.group(0).strip()
+                        
+                # Determine security zone based on intent and action
+                zone = SecurityZone.GREEN
+                if intent_type == IntentType.SYSTEM_ACTION:
+                    if action == "terminal" or action == "delete":
+                        zone = SecurityZone.RED
+                    elif action == "write":
+                        zone = SecurityZone.YELLOW
+                elif intent_type == IntentType.AGENT_HANDOFF:
+                    zone = SecurityZone.YELLOW
 
                 return ClassifiedIntent(
                     intent_type=intent_type,
                     confidence=0.95,
                     params=params,
                     raw_input=text,
+                    security_zone=zone,
                     used_llm=False,
                 )
 
@@ -115,6 +144,7 @@ def classify_intent(text: str) -> ClassifiedIntent:
         confidence=0.3,
         params={"query": text},
         raw_input=text,
+        security_zone=SecurityZone.GREEN,
         used_llm=False,
     )
 

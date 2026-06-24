@@ -23,6 +23,8 @@ caveman/
 graphify-out/
 obsidian_vault/
 *.md
+!README.md
+!readme.md
 
 # Mac
 .DS_Store

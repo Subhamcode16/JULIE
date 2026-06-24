@@ -18,7 +18,7 @@ sounddevice==0.4.7
 PyAudio==0.2.14
 
 # Browser
-playwright==1.44.0
+cloakbrowser
 
 # System
 pyautogui==0.9.54

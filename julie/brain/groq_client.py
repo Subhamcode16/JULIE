@@ -133,7 +133,7 @@ async def classify_with_llm(text: str, client: GroqClient | None = None) -> LLMR
 
 async def answer_with_llm(prompt: str, client: GroqClient | None = None) -> LLMResult:
     """Generate a concise Julie response for information/conversation turns."""
-    client = client or GroqClient()
+    client = client or GroqClient(model=DEFAULT_MODEL)
     return await client.chat(
         [
             {
@@ -142,7 +142,6 @@ async def answer_with_llm(prompt: str, client: GroqClient | None = None) -> LLMR
             },
             {"role": "user", "content": prompt},
         ],
-        model=DEFAULT_MODEL,
         max_tokens=500,
         temperature=0.3,
     )
@@ -150,7 +149,7 @@ async def answer_with_llm(prompt: str, client: GroqClient | None = None) -> LLMR
 
 async def answer_with_vision(prompt: str, base64_image: str) -> LLMResult:
     """Send a vision prompt to Groq."""
-    client = GroqClient()
+    client = GroqClient(model="llama-3.2-90b-vision-preview")
     return await client.chat(
         [
             {
@@ -166,7 +165,6 @@ async def answer_with_vision(prompt: str, base64_image: str) -> LLMResult:
                 ]
             }
         ],
-        model="llama-3.2-90b-vision-preview",
         max_tokens=1024,
     )
 

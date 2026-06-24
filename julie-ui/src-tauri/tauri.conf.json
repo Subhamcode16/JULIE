@@ -12,17 +12,34 @@
   "app": {
     "windows": [
       {
-        "title": "Julie",
-        "width": 100,
-        "height": 100,
+        "label": "main",
+        "title": "Sixteen",
+        "additionalBrowserArgs": "--disable-gpu-sandbox --ignore-gpu-blocklist",
+        "width": 250,
+        "height": 250,
         "resizable": false,
         "fullscreen": false,
         "transparent": true,
         "decorations": false,
-        "alwaysOnTop": true,
+        "shadow": false,
+        "alwaysOnBottom": true,
         "center": false,
         "x": 0,
         "y": 0
+      },
+      {
+        "label": "ai-cursor",
+        "title": "Sixteen Cursor Overlay",
+        "width": 1920,
+        "height": 1080,
+        "resizable": false,
+        "fullscreen": true,
+        "transparent": true,
+        "decorations": false,
+        "shadow": false,
+        "alwaysOnTop": true,
+        "center": true,
+        "skipTaskbar": true
       }
     ],
     "security": {

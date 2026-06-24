@@ -9,28 +9,38 @@
 }
 
 html, body, #root {
-  width: 100px;
-  height: 100px;
+  width: 100vw;
+  height: 100vh;
   background: transparent !important;
   overflow: hidden;
   user-select: none;
 }
 
 .orb-root {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: transparent;
+  align-items: flex-start; /* Align to top */
+  pointer-events: none; /* Let clicks pass through empty space */
 }
 
+/* Let the container maintain its own size, but don't force 100% */
 .orb-container {
-  width: 92px;
-  height: 92px;
-  border-radius: 50%;
+  width: 250px;
+  height: 250px;
   position: relative;
+  pointer-events: auto; /* Catch clicks on the orb itself if needed */
+}
+
+.drag-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px; /* Leave bottom 50px for the button */
   -webkit-app-region: drag;
+  z-index: 10;
 }
 
 /* Fallback/loading state style */
@@ -42,3 +52,5 @@ html, body, #root {
   border: 1px solid rgba(0,200,255,0.15);
   box-shadow: 0 0 10px rgba(0,150,200,0.1);
 }
+
+

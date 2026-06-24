@@ -13,7 +13,7 @@ class JulieConfig(BaseSettings):
     cerebras_api_key: str = ""
 
     # Voice
-    julie_wake_word: str = "hey julie"
+    julie_wake_word: str = "hey sixteen"
     julie_voice: str = "en-US-AriaNeural"
     julie_log_level: str = "INFO"
 
@@ -21,12 +21,18 @@ class JulieConfig(BaseSettings):
     julie_data_dir: str = "./data"
 
     # Network
-    julie_port_ws: int = 8765
+    julie_port_ws: int = 8766
     julie_port_http: int = 8766
 
     # Optional
     telegram_bot_token: str = ""
     telegram_chat_id: str = ""
+    
+    # WhatsApp
+    whatsapp_token: str = ""
+    whatsapp_verify_token: str = ""
+    whatsapp_phone_number_id: str = ""
+    whatsapp_allowed_numbers: str = ""
 
     class Config:
         env_file = str(Path(__file__).parent.parent / ".env")
@@ -38,7 +44,7 @@ class JulieConfig(BaseSettings):
         """SQLite database path."""
         p = Path(self.julie_data_dir)
         p.mkdir(exist_ok=True, parents=True)
-        return p / "julie.db"
+        return p / "sixteen.db"
 
     @property
     def config_path(self) -> Path:

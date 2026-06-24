@@ -8,7 +8,7 @@ from loguru import logger
 
 from .speaker import speak
 
-WS_URL = "ws://127.0.0.1:8765/ws"
+WS_URL = "ws://127.0.0.1:8766/ws"
 
 class VoiceIPCClient:
     def __init__(self):

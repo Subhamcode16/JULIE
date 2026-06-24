@@ -2,6 +2,7 @@
 
 import json
 import uuid
+import asyncio
 from datetime import datetime
 from pathlib import Path
 
@@ -24,6 +25,9 @@ try:
     from core.tool_executor import execute_intent
     from core.scheduler import get_scheduler
     from core.cache import get_cached_response, set_cached_response
+    from core.agent_core import execute_with_verification
+    from core.cursor_tracker import cursor_tracker
+    import core.whatsapp_gateway as whatsapp_gateway
 except ImportError:
     from julie.brain.groq_client import answer_with_llm, classify_with_llm, parse_classifier_json
     from julie.brain.prompt_builder import build_prompt
@@ -36,6 +40,9 @@ except ImportError:
     from julie.core.tool_executor import execute_intent
     from julie.core.scheduler import get_scheduler
     from julie.core.cache import get_cached_response, set_cached_response
+    from julie.core.agent_core import execute_with_verification
+    from julie.core.cursor_tracker import cursor_tracker
+    import julie.core.whatsapp_gateway as whatsapp_gateway
 
 
 app = FastAPI(title="Julie Core", version="1.0.0")
@@ -55,6 +62,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 config = get_config()
 db = None
 active_connections = []
+cursor_connections = []
 pending_actions = {}
 
 CONFIRMATION_TIMEOUT_SECONDS = 5
@@ -73,11 +81,48 @@ async def broadcast_state(state: str) -> None:
         if conn in active_connections:
             active_connections.remove(conn)
 
+async def broadcast_audio(wav_bytes: bytes) -> None:
+    """Broadcast raw WAV audio to all connected WebSocket clients."""
+    dead = []
+    for conn in active_connections:
+        try:
+            await conn.send_bytes(wav_bytes)
+        except Exception:
+            dead.append(conn)
+    for conn in dead:
+        if conn in active_connections:
+            active_connections.remove(conn)
+
+async def broadcast_cursor(payload: dict) -> None:
+    """Broadcast cursor coordinates to the CursorOverlay."""
+    dead = []
+    for conn in cursor_connections:
+        try:
+            await conn.send_json(payload)
+        except Exception:
+            dead.append(conn)
+    for conn in dead:
+        if conn in cursor_connections:
+            cursor_connections.remove(conn)
+
+
+fastapi_loop = None
+
+def sync_broadcast_audio(wav_bytes):
+    if fastapi_loop and fastapi_loop.is_running():
+        import asyncio
+        asyncio.run_coroutine_threadsafe(broadcast_audio(wav_bytes), fastapi_loop)
 
 @app.on_event("startup")
 async def startup_event():
     """Initialize database and log startup."""
-    global db
+    global db, fastapi_loop
+    import asyncio
+    fastapi_loop = asyncio.get_running_loop()
+    
+    import julie.voice.speaker as speaker
+    speaker.set_audio_callback(sync_broadcast_audio)
+    
     logger.add(
         Path(config.julie_data_dir) / "julie.log",
         rotation="500 MB",
@@ -90,6 +135,7 @@ async def startup_event():
     logger.info(f"WebSocket: ws://127.0.0.1:{config.julie_port_ws}")
     logger.info(f"HTTP: http://127.0.0.1:{config.julie_port_http}")
     await get_scheduler().start()
+    cursor_tracker.start(broadcast_cursor)
     logger.info("Ready.")
 
 
@@ -100,6 +146,7 @@ async def shutdown_event():
     if db:
         await close_db(db)
     await get_scheduler().stop()
+    cursor_tracker.stop()
     logger.info("Julie core shutting down.")
 
 
@@ -125,6 +172,99 @@ async def get_app_config():
     }
 
 
+@app.get("/webhook/whatsapp")
+async def verify_whatsapp_webhook(request: Request):
+    """Webhook verification for Meta Cloud API."""
+    mode = request.query_params.get("hub.mode")
+    token = request.query_params.get("hub.verify_token")
+    challenge = request.query_params.get("hub.challenge")
+
+    if mode and token:
+        if mode == "subscribe" and token == config.whatsapp_verify_token:
+            logger.info("WhatsApp webhook verified successfully.")
+            return int(challenge)
+        else:
+            return {"error": "Verification failed"}
+    return {"error": "Missing parameters"}
+
+
+@app.post("/webhook/whatsapp")
+async def receive_whatsapp_webhook(request: Request):
+    """Receive messages from WhatsApp."""
+    data = await request.json()
+    logger.debug(f"WhatsApp webhook received: {data}")
+
+    try:
+        if data.get("object") == "whatsapp_business_account":
+            for entry in data.get("entry", []):
+                for change in entry.get("changes", []):
+                    value = change.get("value", {})
+                    if "messages" in value:
+                        for msg in value["messages"]:
+                            if msg.get("type") == "text":
+                                sender_phone = msg["from"]
+                                text = msg["text"]["body"].strip()
+                                msg_id = msg["id"]
+                                
+                                # 1. Security Check: Is number allowed?
+                                if not whatsapp_gateway.is_number_allowed(sender_phone):
+                                    logger.warning(f"Unauthorized WhatsApp message from {sender_phone}")
+                                    continue
+                                    
+                                # 2. Check for confirmation replies
+                                if sender_phone in whatsapp_gateway.whatsapp_pending_actions:
+                                    if text.lower() == "confirm":
+                                        action_id = whatsapp_gateway.whatsapp_pending_actions.pop(sender_phone)
+                                        # Process confirmation
+                                        conf_payload = {"action_id": action_id, "decision": "confirm"}
+                                        resp = await handle_confirmation(conf_payload)
+                                        await whatsapp_gateway.send_whatsapp_message(sender_phone, resp.get("response", "Action confirmed."))
+                                        return {"status": "ok"}
+                                    elif text.lower() == "cancel":
+                                        whatsapp_gateway.whatsapp_pending_actions.pop(sender_phone)
+                                        await whatsapp_gateway.send_whatsapp_message(sender_phone, "Action cancelled.")
+                                        return {"status": "ok"}
+                                
+                                # 3. Normal input routing
+                                payload = {
+                                    "text": text,
+                                    "source": "whatsapp",
+                                    "session_id": f"whatsapp_{sender_phone}"
+                                }
+                                
+                                # Route it through the core pipeline
+                                response = await handle_user_input(payload, msg_id)
+                                
+                                # 4. Handle YELLOW zones
+                                if response.get("needs_confirmation"):
+                                    whatsapp_gateway.whatsapp_pending_actions[sender_phone] = response["action_id"]
+                                    confirm_msg = f"{response['response']}\n\nReply 'confirm' to execute, or 'cancel' to abort."
+                                    await whatsapp_gateway.send_whatsapp_message(sender_phone, confirm_msg)
+                                else:
+                                    # Normal response
+                                    await whatsapp_gateway.send_whatsapp_message(sender_phone, response.get("response", "Done."))
+    except Exception as e:
+        logger.error(f"Error processing WhatsApp webhook: {e}")
+
+    return {"status": "ok"}
+
+
+@app.websocket("/ws/cursor")
+async def cursor_websocket_endpoint(websocket: WebSocket):
+    """Dedicated WebSocket endpoint for streaming cursor coords at high frequency."""
+    await websocket.accept()
+    cursor_connections.append(websocket)
+    try:
+        while True:
+            await websocket.receive_text() # Ignore incoming
+    except WebSocketDisconnect:
+        if websocket in cursor_connections:
+            cursor_connections.remove(websocket)
+    except Exception as exc:
+        if websocket in cursor_connections:
+            cursor_connections.remove(websocket)
+
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     """WebSocket endpoint for UI, voice, and terminal clients."""
@@ -141,15 +281,15 @@ async def websocket_endpoint(websocket: WebSocket):
             msg_id = data.get("id", str(uuid.uuid4()))
             payload = data.get("payload", {})
 
-            logger.debug(f"Received: {msg_type} | {msg_id}")
+            logger.info(f"Received WS Message: {msg_type} | {msg_id}")
 
             if msg_type in {"USER_INPUT_TEXT", "USER_INPUT_VOICE"}:
                 # Apply global rate limit logic to WebSocket manually using limiter
                 client_ip = websocket.client.host if websocket.client else "127.0.0.1"
                 try:
-                    # SlowAPI hit requires a Limit object or string. Using the default limit string "50/hour"
-                    if not limiter.hit("50/hour", client_ip):
-                        response = {"success": False, "error": "Rate limit exceeded (50/hour). Please try again later."}
+                    from limits import parse
+                    if not limiter.limiter.hit(parse("50/minute"), client_ip):
+                        response = {"success": False, "error": "Rate limit exceeded (50/minute). Please try again later."}
                         await websocket.send_json({
                             "type": f"{msg_type}_RESPONSE",
                             "id": msg_id,
@@ -161,9 +301,15 @@ async def websocket_endpoint(websocket: WebSocket):
                     logger.error(f"Rate limit hit error: {e}")
 
                 # Broadcast LISTENING -> THINKING state transitions to the HUD
-                if msg_type == "USER_INPUT_VOICE":
+                if payload.get("source") == "voice":
                     await broadcast_state("THINKING")
+                
                 response = await handle_user_input(payload, msg_id)
+                
+                if payload.get("source") == "voice" and response.get("response"):
+                    import julie.voice.speaker as speaker
+                    speaker.speak(response["response"])
+                    
                 # After response is ready, broadcast SPEAKING then back to IDLE
                 await broadcast_state("SPEAKING")
             elif msg_type == "CONFIRM_ACTION":
@@ -181,8 +327,10 @@ async def websocket_endpoint(websocket: WebSocket):
                     "payload": response,
                 }
             )
-            # Return to IDLE after reply is dispatched
+            # Add a realistic visual delay for the "SPEAKING" animation to play properly
             if msg_type in {"USER_INPUT_TEXT", "USER_INPUT_VOICE"}:
+                await asyncio.sleep(3)
+                # Return to IDLE after reply is dispatched and animation plays
                 await broadcast_state("IDLE")
 
     except WebSocketDisconnect:
@@ -210,7 +358,7 @@ async def handle_confirmation(payload: dict) -> dict:
     if age_seconds > CONFIRMATION_TIMEOUT_SECONDS:
         return {"success": False, "response": "Confirmation timed out", "action_id": action_id}
 
-    exec_result = await execute_intent(pending["classified"], db=db, confirmed=True)
+    exec_result = await execute_with_verification(pending["classified"], db=db)
     response_text = format_execution_response(exec_result)
     try:
         await save_conversation_turn(
@@ -300,7 +448,7 @@ async def handle_user_input(payload: dict, msg_id: str) -> dict:
             "tool": action_name,
         }
 
-    execution_result = await execute_intent(classified, db=db)
+    execution_result = await execute_with_verification(classified, db=db)
     if not execution_result.get("success") and classified.intent_type in {IntentType.INFORMATION, IntentType.CONVERSATION}:
         cached = get_cached_response(text)
         if cached:
@@ -434,10 +582,16 @@ async def call_full_brain(text: str, session_id: str) -> dict:
 def format_execution_response(execution_result: dict) -> str:
     """Convert a tool result into Julie's short response text."""
     if not execution_result.get("success"):
-        return execution_result.get("error", "I'm sorry, but that action could not be completed.")
+        error_msg = execution_result.get("error")
+        if not error_msg and isinstance(execution_result.get("detail"), dict):
+            error_msg = execution_result["detail"].get("error")
+        return error_msg or "I'm sorry, but that action could not be completed."
 
     detail = execution_result.get("detail")
     tool = execution_result.get("tool")
+
+    if tool == "analyze_screen" and isinstance(detail, dict):
+        return detail.get("answer", "Action completed.")
 
     if tool == "save_memory" and isinstance(detail, dict):
         return f"Got it, I'll remember that {detail.get('value')}."
@@ -478,5 +632,5 @@ if __name__ == "__main__":
         host="127.0.0.1",
         port=config.julie_port_http,
         ws_ping_interval=20,
-        ws_ping_pong_timeout=20,
+        ws_ping_timeout=20,
     )
